@@ -25,9 +25,10 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { useParams, useRouter } from "next/navigation"
-import MutateStoreForm from "../forms/mutate-store-form"
 import useUserData from "@/hooks/use-user"
 import { Store } from "@/types"
+import StoreModal from "../ui/store-modal"
+import { trpc } from "@/trpc/react"
 
 type PopoverTriggerProps = React.ComponentPropsWithoutRef<typeof PopoverTrigger>
 
@@ -43,7 +44,11 @@ export default function StoreSwitcher({
   const params = useParams()
   const router = useRouter()
 
-  const formattedItems = items.map((item) => ({
+  const { data } = trpc.store.fetchAllUserStores.useQuery(undefined, {
+    initialData: items,
+  })
+
+  const formattedItems = data.map((item) => ({
     label: firstCharToUpperCase(item.name || ""),
     value: item.id,
   }))
@@ -68,14 +73,14 @@ export default function StoreSwitcher({
           role="combobox"
           aria-expanded={open}
           aria-label="Select a store"
-          className={cn("w-[200px] justify-between", className)}
+          className={cn("w-full justify-between", className)}
         >
           <StoreIcon className="mr-2 h-4 w-4" />
           {currentStore?.label}
           <ChevronsUpDown className="ml-auto h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
+      <PopoverContent className="max-w-[247px] p-0">
         <Command>
           <CommandList>
             <CommandInput placeholder="Search store..." />
@@ -105,12 +110,12 @@ export default function StoreSwitcher({
           <CommandList>
             <CommandGroup>
               <CommandItem className="cursor-pointer">
-                <MutateStoreForm userId={user?.id || ""}>
+                <StoreModal userId={user?.id || ""}>
                   <Button variant={"ghost"} size="sm">
                     <PlusCircle className="mr-2 h-5 w-5" />
                     Create Store
                   </Button>
-                </MutateStoreForm>
+                </StoreModal>
               </CommandItem>
             </CommandGroup>
           </CommandList>

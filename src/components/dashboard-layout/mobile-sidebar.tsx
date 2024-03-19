@@ -2,6 +2,7 @@
 import { DashboardNav } from "@/components/dashboard-nav"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { MenuIcon } from "lucide-react"
+import { useParams, usePathname } from "next/navigation"
 import { useState } from "react"
 import { Icons } from "../icons"
 
@@ -13,14 +14,23 @@ export interface NavItem {
   icon?: keyof typeof Icons
   label?: string
   description?: string
+  active: boolean
 }
 
-export const navItems: NavItem[] = [
+export const navItems = (pathname: string, storeId = ""): NavItem[] => [
   {
     title: "Dashboard",
-    href: "/dashboard",
+    href: `/${storeId}/admin`,
     icon: "dashboard",
     label: "Dashboard",
+    active: pathname === `/${storeId}/admin`,
+  },
+  {
+    title: "Settings",
+    href: `/${storeId}/admin/settings`,
+    label: "Settings",
+    active: pathname === `/${storeId}/admin/settings`,
+    icon: "settings",
   },
 ]
 
@@ -28,6 +38,8 @@ interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function MobileSidebar({ className }: SidebarProps) {
   const [open, setOpen] = useState(false)
+  const pathname = usePathname()
+  const params = useParams()
   return (
     <>
       <Sheet open={open} onOpenChange={setOpen}>
@@ -41,7 +53,10 @@ export function MobileSidebar({ className }: SidebarProps) {
                 Overview
               </h2>
               <div className="space-y-1">
-                <DashboardNav items={navItems} setOpen={setOpen} />
+                <DashboardNav
+                  items={navItems(pathname, params.store_id as string)}
+                  setOpen={setOpen}
+                />
               </div>
             </div>
           </div>

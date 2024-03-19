@@ -1,4 +1,7 @@
-import { fetchAllUserStores } from "./../../controllers/store.controller"
+import {
+  fetchAllUserStores,
+  updateStore,
+} from "./../../controllers/store.controller"
 import { z } from "zod"
 
 import {
@@ -12,6 +15,11 @@ import {
   insertStoreSchema,
 } from "@/server/controllers/store.controller"
 
+const updateStoreSchema = z.object({
+  values: insertStoreSchema,
+  storeId: z.string(),
+})
+
 export const storeRouter = createTRPCRouter({
   createNewStore: protectedProcedure
     .input(insertStoreSchema)
@@ -24,4 +32,9 @@ export const storeRouter = createTRPCRouter({
   fetchAllUserStores: protectedProcedure.query(async ({ ctx }) => {
     return await fetchAllUserStores(ctx.session.user.id)
   }),
+  updateStore: protectedProcedure
+    .input(updateStoreSchema)
+    .mutation(async ({ ctx, input }) => {
+      return await updateStore(input.values, input.storeId, ctx.session.user.id)
+    }),
 })

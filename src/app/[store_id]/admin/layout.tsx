@@ -16,9 +16,9 @@ const page = async ({ children, params: { store_id } }: Props) => {
   const stores = await serverTrpc.store.fetchAllUserStores()
 
   return (
-    <div className="flex">
+    <div className="flex w-full">
       <Sidebar stores={stores} />
-      <div className="flex h-screen overflow-hidden">
+      <div className="flex w-full h-screen overflow-hidden">
         <Header idAdminDashboard />
         <main className="w-full pt-16">{children}</main>
       </div>

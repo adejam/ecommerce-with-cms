@@ -1,17 +1,6 @@
 "use client"
 
-import React, { useEffect, useState } from "react"
-import * as z from "zod"
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-import { Button } from "../ui/button"
+import React from "react"
 import {
   Form,
   FormControl,
@@ -21,87 +10,65 @@ import {
   FormMessage,
 } from "../ui/form"
 import { Input } from "../ui/input"
-import { storeSchema } from "@/validation-schemas/store.schema"
 import LoadingButton from "../ui/loading-button"
-import Link from "next/link"
 import useMutateStore from "@/hooks/use-mutate-store"
+import { Store } from "@/types"
 
 type Props = {
-  children: React.ReactNode
+  closeButton?: React.ReactNode
   userId: string
+  initialData?: Store
 }
 
-export type FormValues = z.infer<typeof storeSchema>
-
-const MutateStoreForm = ({ children, userId }: Props) => {
-  const [isMounted, setIsMounted] = useState(false)
-
-  const { form, isPending, mutate, onSubmit } = useMutateStore(userId)
-
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
-
-  if (!isMounted) return <>{children}</>
-  if (!userId) return <Link href="/login">{children}</Link>
+const MutateStoreForm = ({
+  closeButton = <></>,
+  userId,
+  initialData,
+}: Props) => {
+  const { form, isPending, onSubmit, updateIsPending } = useMutateStore(
+    userId,
+    initialData
+  )
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Become a seller</DialogTitle>
-          <DialogDescription>
-            Create a new store and start selling.
-          </DialogDescription>
-        </DialogHeader>
-        <div>
-          <div className="space-y-4 py-2 pb-4">
-            <div className="space-y-2">
-              <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)}>
-                  <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Name</FormLabel>
-                        <FormControl>
-                          <Input
-                            disabled={isPending}
-                            placeholder="Store name"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <div className="pt-6 space-x-2 flex items-center justify-end w-full">
-                    <DialogClose>
-                      <Button
-                        disabled={isPending}
-                        variant="outline"
-                        type="button"
-                      >
-                        Cancel
-                      </Button>
-                    </DialogClose>
-                    <LoadingButton
-                      isLoading={isPending}
-                      disabled={isPending}
-                      type="submit"
-                    >
-                      Submit
-                    </LoadingButton>
-                  </div>
-                </form>
-              </Form>
-            </div>
-          </div>
+    <div>
+      <div className="space-y-4 py-2 pb-4">
+        <div className="space-y-2">
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)}>
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Name</FormLabel>
+                    <FormControl>
+                      <Input
+                        disabled={isPending || updateIsPending}
+                        placeholder="Store name"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className="pt-6 space-x-2 flex items-center justify-end w-full">
+                {closeButton}
+
+                <LoadingButton
+                  isLoading={isPending || updateIsPending}
+                  disabled={isPending || updateIsPending}
+                  type="submit"
+                >
+                  Submit
+                </LoadingButton>
+              </div>
+            </form>
+          </Form>
         </div>
-      </DialogContent>
-    </Dialog>
+      </div>
+    </div>
   )
 }
 
