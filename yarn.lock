@@ -1885,6 +1885,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@supabase/auth-helpers-react@npm:^0.4.2":
+  version: 0.4.2
+  resolution: "@supabase/auth-helpers-react@npm:0.4.2"
+  peerDependencies:
+    "@supabase/supabase-js": ^2.19.0
+  checksum: 0ecbb74db94ab9c8ab34e4d19969c44e06fa3ab7dd5db59e85416f07af54527972d75068990ffce50e658f12ae178fcfe8b5c760aac1d847bbdb34a3ead9e723
+  languageName: node
+  linkType: hard
+
 "@supabase/functions-js@npm:2.1.5":
   version: 2.1.5
   resolution: "@supabase/functions-js@npm:2.1.5"
@@ -3330,6 +3339,7 @@ __metadata:
     "@radix-ui/react-toggle": "npm:^1.0.3"
     "@radix-ui/react-toggle-group": "npm:^1.0.4"
     "@radix-ui/react-tooltip": "npm:^1.0.7"
+    "@supabase/auth-helpers-react": "npm:^0.4.2"
     "@supabase/ssr": "npm:^0.1.0"
     "@supabase/supabase-js": "npm:^2.39.7"
     "@t3-oss/env-nextjs": "npm:^0.9.2"

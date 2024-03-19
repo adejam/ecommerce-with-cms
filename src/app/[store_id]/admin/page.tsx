@@ -8,8 +8,6 @@ type Props = {
 }
 
 const page = async ({ params: { store_id } }: Props) => {
-  await fetchUserDataOrRouteToAuthPage()
-
   return <div>{store_id}</div>
 }
 

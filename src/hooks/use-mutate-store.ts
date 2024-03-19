@@ -13,7 +13,7 @@ const useMutateStore = (userId: string) => {
   const { isPending, mutate } = trpc.store.createNewStore.useMutation({
     onSuccess: async (data) => {
       toast.success("Store successfully created")
-      if (data) router.push(`/dashboard/${data?.id}`)
+      if (data) router.push(`/${data?.id}/admin`)
     },
     onError: () => {
       toast.error("An error occured")
