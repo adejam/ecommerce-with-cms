@@ -26,3 +26,11 @@ export const fetchStoreById = async (storeId: string) => {
 
   return storeData[0]
 }
+
+export const fetchAllUserStores = async (userId: string) => {
+  if (!userId) throw new Error("Bad request.")
+  return await db
+    .select({ id: ecomCmsStores.id, name: ecomCmsStores.name })
+    .from(ecomCmsStores)
+    .where(eq(ecomCmsStores.userId, userId))
+}

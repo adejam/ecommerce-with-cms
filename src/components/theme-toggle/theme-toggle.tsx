@@ -28,7 +28,7 @@ export default function ThemeToggle({}: CompProps) {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         {themes.map((theme) => (
-          <DropdownMenuItem onClick={() => setTheme(theme)}>
+          <DropdownMenuItem key={theme} onClick={() => setTheme(theme)}>
             {firstCharToUpperCase(theme)}
           </DropdownMenuItem>
         ))}

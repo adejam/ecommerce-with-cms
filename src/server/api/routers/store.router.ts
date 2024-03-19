@@ -1,3 +1,4 @@
+import { fetchAllUserStores } from "./../../controllers/store.controller"
 import { z } from "zod"
 
 import {
@@ -19,5 +20,8 @@ export const storeRouter = createTRPCRouter({
     }),
   fetchStoreById: publicProcedure.input(z.string()).query(async ({ input }) => {
     return await fetchStoreById(input)
+  }),
+  fetchAllUserStores: protectedProcedure.query(async ({ ctx }) => {
+    return await fetchAllUserStores(ctx.session.user.id)
   }),
 })

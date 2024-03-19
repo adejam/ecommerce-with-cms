@@ -1,15 +1,14 @@
 "use server"
 
-import { createAnonServerClient } from "@/lib/supabase/supabase-anon-server-client"
+import { serverTrpc } from "@/trpc/server"
 import { redirect } from "next/navigation"
 
 export const fetchUserDataOrRouteToAuthPage = async () => {
-  const supabase = createAnonServerClient()
-  const { data } = await supabase.auth.getUser()
+  const user = serverTrpc.user.getUser()
 
-  if (!data || !data.user) {
+  if (!user) {
     redirect("/login")
   }
 
-  return data.user
+  return user
 }

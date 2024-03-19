@@ -1,18 +1,24 @@
 import { supabaseBrowserClient } from "./../lib/supabase/subabase-browser-client"
-import { useUser } from "@supabase/auth-helpers-react"
 import { useState } from "react"
+import { trpc } from "@/trpc/react"
 
 const useUserData = () => {
-  const user = useUser()
   const supabase = supabaseBrowserClient()
   const [signinOut, setSigninOut] = useState(false)
+  const trpcContext = trpc.useUtils()
+  const { data: user } = trpc.user.getUser.useQuery()
 
   const signOut = () => {
     if (user) {
       setSigninOut(true)
-      supabase.auth.signOut().finally(() => {
-        setSigninOut(false)
-      })
+      supabase.auth
+        .signOut()
+        .then(() => {
+          trpcContext.user.getUser.invalidate()
+        })
+        .finally(() => {
+          setSigninOut(false)
+        })
     }
   }
 

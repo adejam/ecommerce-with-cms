@@ -11,12 +11,11 @@ type Props = {
 
 const page = async ({ children, params: { store_id } }: Props) => {
   const store = await serverTrpc.store.fetchStoreById(store_id)
-  console.log(store)
   if (!store) {
     notFound()
   }
 
-  return { children }
+  return <>{children}</>
 }
 
 export default page

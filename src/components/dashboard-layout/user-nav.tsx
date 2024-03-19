@@ -14,7 +14,7 @@ import useUserData from "@/hooks/use-user"
 import { extractEmailLeft } from "@/lib/utils"
 
 export default function UserNav() {
-  const { user, signinOut, signOut } = useUserData()
+  const { user, signOut, signinOut } = useUserData()
   if (!user) return null
 
   return (
@@ -28,18 +28,27 @@ export default function UserNav() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end" forceMount>
-        <DropdownMenuLabel className="font-normal">
-          <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">
-              {extractEmailLeft(user?.email || "")}
-            </p>
-            <p className="text-xs leading-none text-muted-foreground">
-              {extractEmailLeft(user?.email || "")}
-            </p>
-          </div>
-        </DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem disabled={signinOut} onClick={() => signOut()}>
+        {user.email && (
+          <>
+            <DropdownMenuLabel className="font-normal">
+              <div className="flex flex-col space-y-1">
+                <p className="text-sm font-medium leading-none">
+                  {extractEmailLeft(user?.email || "")}
+                </p>
+
+                <p className="text-xs leading-none text-muted-foreground">
+                  {user?.email}
+                </p>
+              </div>
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+          </>
+        )}
+        <DropdownMenuItem
+          className="cursor-pointer"
+          disabled={signinOut}
+          onClick={() => signOut()}
+        >
           Log out
           <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
         </DropdownMenuItem>
