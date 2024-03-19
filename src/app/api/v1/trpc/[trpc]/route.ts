@@ -23,7 +23,7 @@ const handler = async (req: NextRequest) => {
     data: { session },
   } = await supabase.auth.getSession()
 
-  await fetchRequestHandler({
+  return fetchRequestHandler({
     endpoint: "/api/v1/trpc",
     req,
     router: appRouter,

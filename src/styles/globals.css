@@ -7,6 +7,10 @@ body {
   height: 100vh;
 }
 
+html {
+  @apply text-sm md:text-base;
+}
+
 *,
 *::before,
 *::after {

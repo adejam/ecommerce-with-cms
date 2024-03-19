@@ -6,7 +6,9 @@ import { createTRPCReact } from "@trpc/react-query"
 import { useState } from "react"
 
 import { type AppRouter } from "@/server/api/root"
-import { getUrl, transformer } from "./shared"
+import { getUrl } from "./shared"
+import { Toaster } from "@/components/ui/sonner"
+import SuperJSON from "superjson"
 
 const createQueryClient = () => new QueryClient()
 
@@ -20,14 +22,16 @@ const getQueryClient = () => {
   return (clientQueryClientSingleton ??= createQueryClient())
 }
 
-export const api = createTRPCReact<AppRouter>()
+export const trpc = createTRPCReact<AppRouter>()
 
-export function TRPCReactProvider(props: { children: React.ReactNode }) {
+export function TRPCReactProvider(props: {
+  children: React.ReactNode
+  headers?: Headers
+}) {
   const queryClient = getQueryClient()
 
   const [trpcClient] = useState(() =>
-    api.createClient({
-      transformer,
+    trpc.createClient({
       links: [
         loggerLink({
           enabled: (op) =>
@@ -35,17 +39,24 @@ export function TRPCReactProvider(props: { children: React.ReactNode }) {
             (op.direction === "down" && op.result instanceof Error),
         }),
         unstable_httpBatchStreamLink({
+          transformer: SuperJSON,
           url: getUrl(),
+          headers() {
+            const headers = new Map(props.headers)
+            headers.set("x-trpc-source", "nextjs-react")
+            return Object.fromEntries(headers)
+          },
         }),
       ],
     })
   )
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <api.Provider client={trpcClient} queryClient={queryClient}>
+    <trpc.Provider client={trpcClient} queryClient={queryClient}>
+      <QueryClientProvider client={queryClient}>
+        <Toaster closeButton position="top-right" richColors />
         {props.children}
-      </api.Provider>
-    </QueryClientProvider>
+      </QueryClientProvider>
+    </trpc.Provider>
   )
 }
