@@ -37,8 +37,8 @@ export async function loginAction(
     return { success: false, fields, message: error.message }
   }
 
-  revalidatePath("/dashboard", "layout")
-  redirect(redirectFrom || "/dashboard")
+  revalidatePath("/", "layout")
+  redirect(redirectFrom || "/")
 }
 
 export async function signupAction(
