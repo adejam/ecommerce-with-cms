@@ -12,7 +12,7 @@ import {
 import { Input } from "../ui/input"
 import LoadingButton from "../ui/loading-button"
 import useMutateStore from "@/hooks/use-mutate-store"
-import { Store } from "@/types"
+import { type Store } from "@/types"
 
 type Props = {
   closeButton?: React.ReactNode

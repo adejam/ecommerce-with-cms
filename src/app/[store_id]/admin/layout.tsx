@@ -5,13 +5,10 @@ import { serverTrpc } from "@/trpc/server"
 import React from "react"
 
 type Props = {
-  params: {
-    store_id: string
-  }
   children: React.ReactNode
 }
 
-const page = async ({ children, params: { store_id } }: Props) => {
+const page = async ({ children }: Props) => {
   await fetchUserDataOrRouteToAuthPage()
   const stores = await serverTrpc.store.fetchAllUserStores()
 

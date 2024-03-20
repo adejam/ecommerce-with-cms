@@ -1,6 +1,6 @@
 import { createInsertSchema } from "drizzle-zod"
 import { ecomCmsStores } from "drizzle/schema"
-import * as z from "zod"
+import type * as z from "zod"
 import { db } from "../db"
 import { and, eq } from "drizzle-orm"
 import { currentDate } from "@/lib/utils"
@@ -47,4 +47,10 @@ export const fetchAllUserStores = async (userId: string) => {
     .select({ id: ecomCmsStores.id, name: ecomCmsStores.name })
     .from(ecomCmsStores)
     .where(eq(ecomCmsStores.userId, userId))
+}
+
+export const deleteStore = async (storeId: string, userId: string) => {
+  await db
+    .delete(ecomCmsStores)
+    .where(and(eq(ecomCmsStores.userId, userId), eq(ecomCmsStores.id, storeId)))
 }

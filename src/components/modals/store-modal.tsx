@@ -12,7 +12,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import MutateStoreForm from "../forms/mutate-store-form"
-import { Button } from "./button"
+import { Button } from "../ui/button"
 
 type Props = {
   children: React.ReactNode

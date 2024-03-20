@@ -1,7 +1,10 @@
 import { Separator } from "@/components/ui/separator"
 import { Heading } from "@/components/ui/heading"
 import MutateStoreForm from "./mutate-store-form"
-import { Store } from "@/types"
+import { type Store } from "@/types"
+import { Button } from "../ui/button"
+import { Trash } from "lucide-react"
+import DeleteStoreModal from "../modals/delete-store-modal"
 
 interface SettingsFormProps {
   initialData: Store
@@ -19,17 +22,21 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({
           title="Store settings"
           description="Manage store preferences"
         />
-        {/* <Button
-          disabled={loading}
-          variant="destructive"
-          size="sm"
-          onClick={() => setOpen(true)}
-        >
-          <Trash className="h-4 w-4" />
-        </Button> */}
       </div>
       <Separator />
       <MutateStoreForm userId={userId} initialData={initialData} />
+      <Separator className="mt-6" />
+      <div className="flex items-center justify-between mt-2">
+        <Heading
+          title="Delete store"
+          description="Delete store. This action is irrevocable."
+        />
+        <DeleteStoreModal initialData={initialData}>
+          <Button variant="destructive" size="sm">
+            <Trash className="h-4 w-4" />
+          </Button>
+        </DeleteStoreModal>
+      </div>
     </div>
   )
 }

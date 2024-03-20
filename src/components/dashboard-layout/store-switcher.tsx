@@ -27,7 +27,7 @@ import {
 import { useParams, useRouter } from "next/navigation"
 import useUserData from "@/hooks/use-user"
 import { Store } from "@/types"
-import StoreModal from "../ui/store-modal"
+import StoreModal from "../modals/store-modal"
 import { trpc } from "@/trpc/react"
 
 type PopoverTriggerProps = React.ComponentPropsWithoutRef<typeof PopoverTrigger>
