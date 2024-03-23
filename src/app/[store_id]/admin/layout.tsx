@@ -17,7 +17,7 @@ const page = async ({ children }: Props) => {
       <Sidebar stores={stores} />
       <div className="flex w-full h-screen overflow-hidden">
         <Header idAdminDashboard />
-        <main className="w-full pt-16">{children}</main>
+        <main className="w-full pt-16 overflow-y-scroll pb-10">{children}</main>
       </div>
     </div>
   )

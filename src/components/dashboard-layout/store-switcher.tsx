@@ -26,14 +26,14 @@ import {
 } from "@/components/ui/popover"
 import { useParams, useRouter } from "next/navigation"
 import useUserData from "@/hooks/use-user"
-import { Store } from "@/types"
+import { Store, Stores } from "@/types"
 import StoreModal from "../modals/store-modal"
 import { trpc } from "@/trpc/react"
 
 type PopoverTriggerProps = React.ComponentPropsWithoutRef<typeof PopoverTrigger>
 
 interface StoreSwitcherProps extends PopoverTriggerProps {
-  items: Store[]
+  items: Stores
 }
 
 export default function StoreSwitcher({

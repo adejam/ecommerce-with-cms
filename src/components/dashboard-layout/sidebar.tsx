@@ -1,11 +1,11 @@
 import { DashboardNav } from "@/components/dashboard-nav"
 import { cn } from "@/lib/utils"
-import { Store } from "@/types"
+import { Store, Stores } from "@/types"
 import DesktopSidebar from "./desktop.sidebar"
 import { navItems } from "./mobile-sidebar"
 import StoreSwitcher from "./store-switcher"
 
-export default function Sidebar({ stores }: { stores: Store[] }) {
+export default function Sidebar({ stores }: { stores: Stores }) {
   return (
     <nav
       className={cn(

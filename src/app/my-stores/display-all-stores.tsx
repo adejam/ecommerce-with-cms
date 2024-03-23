@@ -2,12 +2,12 @@
 
 import { Card, CardTitle } from "@/components/ui/card"
 import { trpc } from "@/trpc/react"
-import { type Store } from "@/types"
+import { Stores, type Store } from "@/types"
 import Link from "next/link"
 import React from "react"
 
 type Props = {
-  initialData: Store[]
+  initialData: Stores
 }
 
 const StoresList = ({ initialData }: Props) => {

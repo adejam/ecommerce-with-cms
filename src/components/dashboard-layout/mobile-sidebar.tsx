@@ -32,6 +32,13 @@ export const navItems = (pathname: string, storeId = ""): NavItem[] => [
     active: pathname === `/${storeId}/admin/settings`,
     icon: "settings",
   },
+  {
+    title: "Billboards",
+    href: `/${storeId}/admin/billboards`,
+    label: "Billboards",
+    active: pathname === `/${storeId}/admin/billboards`,
+    icon: "billboard",
+  },
 ]
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}

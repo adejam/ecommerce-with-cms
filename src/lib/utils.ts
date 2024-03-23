@@ -18,3 +18,9 @@ export const extractEmailLeft = (email: string): string => {
   // If '@' is not found, return the original email
   return email
 }
+
+export const computeImageUrl = (
+  assetName: string,
+  bucketName = "ecommerce_assets"
+) =>
+  `${process.env.NEXT_PUBLIC_SUPABASE_URL!}/storage/v1/object/public/${bucketName}/${assetName}`

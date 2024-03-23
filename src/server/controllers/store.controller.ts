@@ -34,7 +34,11 @@ export const updateStore = async (
 export const fetchStoreById = async (storeId: string) => {
   if (!storeId) throw new Error("Bad request.")
   const storeData = await db
-    .select({ id: ecomCmsStores.id, name: ecomCmsStores.name })
+    .select({
+      id: ecomCmsStores.id,
+      name: ecomCmsStores.name,
+      userId: ecomCmsStores.userId,
+    })
     .from(ecomCmsStores)
     .where(eq(ecomCmsStores.id, storeId))
 
