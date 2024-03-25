@@ -26,8 +26,6 @@ const useMutateBillboard = (initialData?: Billboard) => {
   const buttonText = initialData ? "Save changes" : "Create"
 
   const [nameValue, setNameValue] = useState("")
-  // const [imageError, setImageError] = useState("")
-  // const [images, setImages] = useState<File[]>([])
   const {
     handleImageUpload,
     images,
@@ -35,7 +33,6 @@ const useMutateBillboard = (initialData?: Billboard) => {
     isLoading: imageIsLoading,
     setImageError,
     imageError,
-    savedImages,
   } = useImageUploader()
 
   const { data: billboard } = trpc.billboard.fetchBillboard.useQuery(

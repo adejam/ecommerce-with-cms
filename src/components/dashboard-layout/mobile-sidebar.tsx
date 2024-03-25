@@ -26,18 +26,25 @@ export const navItems = (pathname: string, storeId = ""): NavItem[] => [
     active: pathname === `/${storeId}/admin`,
   },
   {
-    title: "Settings",
-    href: `/${storeId}/admin/settings`,
-    label: "Settings",
-    active: pathname === `/${storeId}/admin/settings`,
-    icon: "settings",
-  },
-  {
     title: "Billboards",
     href: `/${storeId}/admin/billboards`,
     label: "Billboards",
     active: pathname === `/${storeId}/admin/billboards`,
     icon: "billboard",
+  },
+  {
+    title: "Categories",
+    href: `/${storeId}/admin/categories`,
+    label: "Categories",
+    active: pathname === `/${storeId}/admin/categories`,
+    icon: "laptop",
+  },
+  {
+    title: "Settings",
+    href: `/${storeId}/admin/settings`,
+    label: "Settings",
+    active: pathname === `/${storeId}/admin/settings`,
+    icon: "settings",
   },
 ]
 

@@ -52,11 +52,11 @@ export const createNewBillboard = async (
 
   if (!store || store.userId !== userId) throw new Error("Bad request")
 
-  const storeData = await db
+  const billboardData = await db
     .insert(ecomCmsBillBoards)
     .values({ ...values, updatedAt: currentDate() })
     .returning()
-  return storeData[0]
+  return billboardData[0]
 }
 
 export const updateBillboard = async (
@@ -64,7 +64,6 @@ export const updateBillboard = async (
   id: string,
   userId: string
 ) => {
-  console.log(values.storeId)
   if (!values.storeId) throw new Error("Bad request!")
 
   const store = await fetchStoreById(values.storeId)

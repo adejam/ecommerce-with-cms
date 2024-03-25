@@ -12,3 +12,6 @@ import { pgTableCreator } from "drizzle-orm/pg-core"
 export const createGodFatherAiTable = pgTableCreator(
   (name) => `ecom_cms_${name}`
 )
+
+export * from "./relations"
+export * from "../../../drizzle/schema"

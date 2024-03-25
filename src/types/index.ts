@@ -14,3 +14,11 @@ export type Billboard = Awaited<
 export type Billboards = Awaited<
   ReturnType<(typeof serverTrpc)["billboard"]["fetchBillboards"]>
 >
+
+export type Category = Awaited<
+  ReturnType<(typeof serverTrpc)["category"]["fetchCategory"]>
+>
+
+export type Categories = Awaited<
+  ReturnType<(typeof serverTrpc)["category"]["fetchCategories"]>
+>

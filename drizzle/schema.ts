@@ -97,13 +97,15 @@ export const ecomCmsBillBoards = pgTable("ecom_cms_bill_boards", {
   updatedAt: timestamp("updated_at", { withTimezone: true, mode: "string" }),
 })
 
-export const ecomCmsSizes = pgTable("ecom_cms_sizes", {
+export const ecomCmsCategories = pgTable("ecom_cms_categories", {
   id: uuid("id").defaultRandom().primaryKey().notNull(),
   storeId: uuid("store_id")
     .notNull()
     .references(() => ecomCmsStores.id, { onDelete: "cascade" }),
+  billboardId: uuid("billboard_id")
+    .notNull()
+    .references(() => ecomCmsBillBoards.id, { onDelete: "cascade" }),
   name: text("name").notNull(),
-  value: text("value").notNull(),
   createdAt: timestamp("created_at", {
     withTimezone: true,
     mode: "string",
@@ -111,12 +113,13 @@ export const ecomCmsSizes = pgTable("ecom_cms_sizes", {
   updatedAt: timestamp("updated_at", { withTimezone: true, mode: "string" }),
 })
 
-export const ecomCmsCategories = pgTable("ecom_cms_categories", {
+export const ecomCmsSizes = pgTable("ecom_cms_sizes", {
   id: uuid("id").defaultRandom().primaryKey().notNull(),
   storeId: uuid("store_id")
     .notNull()
     .references(() => ecomCmsStores.id, { onDelete: "cascade" }),
   name: text("name").notNull(),
+  value: text("value").notNull(),
   createdAt: timestamp("created_at", {
     withTimezone: true,
     mode: "string",

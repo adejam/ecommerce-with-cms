@@ -1,9 +1,7 @@
 "use client"
 
-// import axios from "axios";
 import { useState } from "react"
 import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react"
-// import { toast } from "react-hot-toast";
 import { useParams, useRouter } from "next/navigation"
 
 import { Button } from "@/components/ui/button"
@@ -14,14 +12,17 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+// import { useCategoryModal } from "@/hooks/use-category-modal"
+// import { AlertModal } from "@/components/modals/alert-modal"
 
-import { BillboardColumn } from "./columns"
+import { CategoryColumn } from "./columns"
+import { toast } from "sonner"
 import { ConfirmationModal } from "@/components/modals/confirmation-modal"
-import useMutateBillboard from "@/hooks/use-mutate-billboard"
 import { trpc } from "@/trpc/react"
+import useMutateCategory from "@/hooks/use-mutate-category"
 
 interface CellActionProps {
-  data: BillboardColumn
+  data: CategoryColumn
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
@@ -29,17 +30,25 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const params = useParams()
   const [open, setOpen] = useState(false)
   const trpcContext = trpc.useUtils()
-  const billboard = trpcContext.billboard.fetchBillboards
+  const category = trpcContext.category.fetchCategories
     .getData(params.store_id! as string)
-    ?.find((billboard) => billboard.id === data.id)
-  const { deleteBillboard, deleteIsPending } = useMutateBillboard(billboard)
+    ?.find((category) => category.id === data.id)
+  const { deleteCategory, deleteIsPending } = useMutateCategory(
+    undefined,
+    category
+  )
+
+  const onCopy = (id: string) => {
+    navigator.clipboard.writeText(id)
+    toast.success("Category ID copied to clipboard.")
+  }
 
   return (
     <>
       <ConfirmationModal
         isOpen={open}
         onClose={() => setOpen(false)}
-        onConfirm={deleteBillboard}
+        onConfirm={deleteCategory}
         loading={deleteIsPending}
       />
       <DropdownMenu>
@@ -51,9 +60,12 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <DropdownMenuItem onClick={() => onCopy(data.id)}>
+            <Copy className="mr-2 h-4 w-4" /> Copy Id
+          </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() =>
-              router.push(`/${params.store_id}/admin/billboards/${data.id}`)
+              router.push(`/${params.store_id}/admin/categories/${data.id}`)
             }
           >
             <Edit className="mr-2 h-4 w-4" /> Update
