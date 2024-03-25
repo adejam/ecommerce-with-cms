@@ -1,4 +1,5 @@
-import { computeImageUrl } from "@/lib/utils"
+import { deleteFile } from "@/app/actions"
+import { computeImageUrl, getImageNameFromUrl } from "@/lib/utils"
 import { trpc } from "@/trpc/react"
 import { Billboard, type Store } from "@/types"
 import { billBoardSchema } from "@/validation-schemas/billboard.schema"
@@ -81,9 +82,8 @@ const useMutateBillboard = (initialData?: Billboard) => {
   })
 
   async function onSubmit(values: BillboardFormValues) {
-    console.log("here")
     if (!params.store_id || !params.billboardId) return
-    if (!billboard) {
+    if (!billboard || (billboard && !values.imageUrl)) {
       if (!images.length) {
         setImageError("Add an image")
         return
@@ -91,13 +91,17 @@ const useMutateBillboard = (initialData?: Billboard) => {
     }
 
     if (images.length) {
-      const data = await handleImageUpload(storeId)
-      if (data && savedImages[0]) {
+      const data = await handleImageUpload(
+        storeId,
+        (billboard && billboard.imageUrl) || ""
+      )
+      if (data.success && data.images[0]) {
         if (billboard) {
           mutateUpdateBillboard({
             values: {
               ...values,
-              imageUrl: computeImageUrl(savedImages[0].name),
+              storeId,
+              imageUrl: computeImageUrl(data.images[0].name),
             },
             id: billboardId,
           })
@@ -107,11 +111,15 @@ const useMutateBillboard = (initialData?: Billboard) => {
         mutate({
           ...values,
           storeId,
-          imageUrl: computeImageUrl(savedImages[0].name),
+          imageUrl: computeImageUrl(data.images[0].name),
         })
       }
     } else {
-      if (billboard) mutateUpdateBillboard({ values, id: billboardId })
+      if (billboard)
+        mutateUpdateBillboard({
+          values: { ...values, storeId },
+          id: billboardId,
+        })
     }
   }
 
@@ -120,15 +128,27 @@ const useMutateBillboard = (initialData?: Billboard) => {
       onSuccess: async () => {
         toast.success("Billboard successfully deleted")
         await trpcContext.billboard.fetchBillboards.invalidate(storeId)
+        router.push(`/${storeId}/admin/billboards`)
       },
       onError: () => {
         toast.error("An error occured")
       },
     })
 
-  const deleteBillboard = () => {
+  const deleteBillboard = async () => {
     if (billboard) {
-      deleteBillboardMutationFunc({ storeId, billboardId })
+      if (billboard.imageUrl) {
+        const currentImgName = getImageNameFromUrl(billboard.imageUrl)
+        if (currentImgName) {
+          const res = await deleteFile(currentImgName)
+          if (res.error) {
+            toast.error("An error occured")
+            return
+          }
+        }
+      }
+
+      deleteBillboardMutationFunc({ storeId, billboardId: billboard.id })
     }
   }
 

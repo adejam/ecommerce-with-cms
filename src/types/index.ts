@@ -10,3 +10,7 @@ export type Stores = Awaited<
 export type Billboard = Awaited<
   ReturnType<(typeof serverTrpc)["billboard"]["fetchBillboard"]>
 >
+
+export type Billboards = Awaited<
+  ReturnType<(typeof serverTrpc)["billboard"]["fetchBillboards"]>
+>

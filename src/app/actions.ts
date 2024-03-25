@@ -2,6 +2,7 @@
 
 import { createAnonServerClient } from "@/lib/supabase/supabase-anon-server-client"
 import { supabaseServerClient } from "@/lib/supabase/supabase-server-client"
+import { getImageNameFromUrl } from "@/lib/utils"
 
 import { serverTrpc } from "@/trpc/server"
 import { redirect } from "next/navigation"
@@ -23,9 +24,33 @@ interface ActionReturnType {
   data: any
 }
 
+export const deleteFile = async (fileName: string) => {
+  const supabaseApiClient = supabaseServerClient()
+  const { error } = await supabaseApiClient.storage
+    .from("ecommerce_assets")
+    .remove([`${fileName}`])
+  if (error) {
+    return {
+      success: false,
+      error: true,
+      message: "An error occured while deleting file",
+      data: null,
+    }
+  }
+
+  return {
+    success: true,
+    error: false,
+    message: "File deleted successfully",
+    data: null,
+  }
+}
+
 export const handleFileUploads = async (
   formData: FormData,
-  storeId: string
+  storeId: string,
+  currentImgUrl = "",
+  folderPath = "billboards"
 ): Promise<ActionReturnType> => {
   const user = await serverTrpc.user.getUser()
 
@@ -57,9 +82,19 @@ export const handleFileUploads = async (
 
   const supabaseApiClient = supabaseServerClient()
 
+  if (currentImgUrl) {
+    const currentImgName = getImageNameFromUrl(currentImgUrl)
+    if (currentImgName) {
+      const returnedData = await deleteFile(currentImgName)
+      if (returnedData.error) {
+        return { ...returnedData }
+      }
+    }
+  }
+
   const { data, error } = await supabaseApiClient.storage
     .from("ecommerce_assets")
-    .upload(`billboards/${file.name}`, file, {
+    .upload(`${folderPath}/${file.name}`, file, {
       cacheControl: "3600",
       upsert: false,
     })

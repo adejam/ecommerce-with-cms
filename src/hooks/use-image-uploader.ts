@@ -15,38 +15,46 @@ const useImageUploader = () => {
   const [uploadDone, setUploadDone] = useState(false)
   const [imageError, setImageError] = useState("")
 
-  const handleImageUpload = async (storeId: string) => {
+  const handleImageUpload = async (storeId: string, currentImageUrl = "") => {
     setIsLoading(true)
     setUploadDone(false)
     setFailedImages([])
     setSavedImages([])
+    const imgs: { name: string; path: string }[] = []
     if (images.length < 1) {
       toast.error("Select an image")
     } else {
-      images.forEach(async (image, index) => {
-        const form = new FormData()
-        form.append("file", image)
+      await Promise.all(
+        images.map(async (image, index) => {
+          const form = new FormData()
+          form.append("file", image)
 
-        const { error, success } = await handleFileUploads(form, storeId)
+          const { error, success } = await handleFileUploads(
+            form,
+            storeId,
+            currentImageUrl
+          )
+          if (success) {
+            setSavedImages((prevState) => [
+              ...prevState,
+              { name: image.name, path: "" },
+            ])
+            imgs.push({ name: image.name, path: "" })
+          }
 
-        if (success) {
-          setSavedImages((prevState) => [
-            ...prevState,
-            { name: image.name, path: "" },
-          ])
-        }
+          if (error) {
+            setFailedImages((prevState) => [...prevState, image])
+          }
 
-        if (error) {
-          setFailedImages((prevState) => [...prevState, image])
-        }
-
-        if (index === images.length - 1) {
-          setUploadDone(true)
-        }
-      })
+          if (index === images.length - 1) {
+            setUploadDone(true)
+            setIsLoading(false)
+          }
+        })
+      )
     }
 
-    return true
+    return { success: true, images: imgs }
   }
 
   return {

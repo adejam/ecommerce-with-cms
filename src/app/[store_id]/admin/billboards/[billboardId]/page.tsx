@@ -6,8 +6,7 @@ const BillboardPage = async ({
 }: {
   params: { billboardId: string; store_id: string }
 }) => {
-  const billboardIdd =
-    billboardId === "new" ? "7c49d102-bbcd-4fd8-b4d2-94c96cbb074f" : billboardId
+  const billboardIdd = billboardId === "new" ? store_id : billboardId
   const billboard = await serverTrpc.billboard.fetchBillboard({
     storeId: store_id,
     billboardId: billboardIdd,

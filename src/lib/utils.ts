@@ -21,6 +21,17 @@ export const extractEmailLeft = (email: string): string => {
 
 export const computeImageUrl = (
   assetName: string,
+  folderPath = "billboards",
   bucketName = "ecommerce_assets"
 ) =>
-  `${process.env.NEXT_PUBLIC_SUPABASE_URL!}/storage/v1/object/public/${bucketName}/${assetName}`
+  `${process.env.NEXT_PUBLIC_SUPABASE_URL!}/storage/v1/object/public/${bucketName}/${folderPath}/${assetName}`
+
+export const getImageNameFromUrl = (
+  imageUrl: string,
+  bucketName = "ecommerce_assets"
+) => {
+  return imageUrl.replace(
+    `${process.env.NEXT_PUBLIC_SUPABASE_URL!}/storage/v1/object/public/${bucketName}/`,
+    ""
+  )
+}

@@ -64,6 +64,7 @@ export const updateBillboard = async (
   id: string,
   userId: string
 ) => {
+  console.log(values.storeId)
   if (!values.storeId) throw new Error("Bad request!")
 
   const store = await fetchStoreById(values.storeId)
