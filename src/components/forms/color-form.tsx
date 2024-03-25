@@ -14,16 +14,16 @@ import {
 } from "@/components/ui/form"
 import { Separator } from "@/components/ui/separator"
 import { Heading } from "@/components/ui/heading"
-import useMutateSize from "@/hooks/use-mutate-size"
+import useMutateColor from "@/hooks/use-mutate-Color"
 import LoadingButton from "../ui/loading-button"
 import { ConfirmationModal } from "../modals/confirmation-modal"
-import { Size } from "@/types"
+import { Color } from "@/types"
 
-interface SizeFormProps {
-  initialData: Size
+interface ColorFormProps {
+  initialData: Color
 }
 
-export const SizeForm: React.FC<SizeFormProps> = ({ initialData }) => {
+export const ColorForm: React.FC<ColorFormProps> = ({ initialData }) => {
   const [open, setOpen] = useState(false)
 
   const {
@@ -32,11 +32,12 @@ export const SizeForm: React.FC<SizeFormProps> = ({ initialData }) => {
     onSubmit,
     updateIsPending,
     deleteIsPending,
-    deleteSize,
+    deleteColor,
     description,
     title,
     buttonText,
-  } = useMutateSize(initialData)
+  } = useMutateColor(initialData)
+
   return (
     <>
       <div className="flex items-center justify-between">
@@ -68,7 +69,7 @@ export const SizeForm: React.FC<SizeFormProps> = ({ initialData }) => {
                   <FormControl>
                     <Input
                       disabled={isPending || updateIsPending}
-                      placeholder="Size name"
+                      placeholder="Color name"
                       {...field}
                     />
                   </FormControl>
@@ -83,11 +84,17 @@ export const SizeForm: React.FC<SizeFormProps> = ({ initialData }) => {
                 <FormItem>
                   <FormLabel>Value</FormLabel>
                   <FormControl>
-                    <Input
-                      disabled={isPending || updateIsPending}
-                      placeholder="Size value"
-                      {...field}
-                    />
+                    <div className="flex items-center gap-x-4">
+                      <Input
+                        disabled={isPending || updateIsPending}
+                        placeholder="Color value"
+                        {...field}
+                      />
+                      <div
+                        className="border p-4 rounded-full"
+                        style={{ backgroundColor: field.value }}
+                      />
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -106,7 +113,7 @@ export const SizeForm: React.FC<SizeFormProps> = ({ initialData }) => {
       <ConfirmationModal
         isOpen={open}
         onClose={() => setOpen(false)}
-        onConfirm={deleteSize}
+        onConfirm={deleteColor}
         loading={deleteIsPending}
       />
     </>

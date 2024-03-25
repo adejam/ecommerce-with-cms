@@ -28,3 +28,11 @@ export type Size = Awaited<ReturnType<(typeof serverTrpc)["size"]["fetchSize"]>>
 export type Sizes = Awaited<
   ReturnType<(typeof serverTrpc)["size"]["fetchSizes"]>
 >
+
+export type Color = Awaited<
+  ReturnType<(typeof serverTrpc)["color"]["fetchColor"]>
+>
+
+export type Colors = Awaited<
+  ReturnType<(typeof serverTrpc)["color"]["fetchColors"]>
+>

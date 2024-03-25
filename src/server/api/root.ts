@@ -1,3 +1,4 @@
+import { colorsRouter } from "./routers/colors.router"
 import { userRouter } from "@/server/api/routers/user"
 import { createCallerFactory, createTRPCRouter } from "@/server/api/trpc"
 import { billboardRouter } from "./routers/billboards.router"
@@ -16,6 +17,7 @@ export const appRouter = createTRPCRouter({
   billboard: billboardRouter,
   category: categoriesRouter,
   size: sizesRouter,
+  color: colorsRouter,
 })
 
 // export type definition of API

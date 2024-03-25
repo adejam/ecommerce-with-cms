@@ -19,6 +19,7 @@ import {
   LucideProps,
   Moon,
   MoreVertical,
+  Palette,
   Pizza,
   Plus,
   Ruler,
@@ -63,6 +64,7 @@ export const Icons = {
   moon: Moon,
   size: Ruler,
   laptop: Laptop,
+  palette: Palette,
   gitHub: ({ ...props }: LucideProps) => (
     <svg
       aria-hidden="true"

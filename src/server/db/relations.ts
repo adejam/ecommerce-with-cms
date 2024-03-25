@@ -2,6 +2,7 @@ import { relations } from "drizzle-orm"
 import {
   ecomCmsBillBoards,
   ecomCmsCategories,
+  ecomCmsColors,
   ecomCmsProducts,
   ecomCmsSizes,
   ecomCmsStores,
@@ -43,6 +44,17 @@ export const ecomCmsSizesRelations = relations(
   ({ many, one }) => ({
     store: one(ecomCmsStores, {
       fields: [ecomCmsSizes.storeId],
+      references: [ecomCmsStores.id],
+    }),
+    products: many(ecomCmsProducts),
+  })
+)
+
+export const ecomCmsColorsRelations = relations(
+  ecomCmsColors,
+  ({ many, one }) => ({
+    store: one(ecomCmsStores, {
+      fields: [ecomCmsColors.storeId],
       references: [ecomCmsStores.id],
     }),
     products: many(ecomCmsProducts),

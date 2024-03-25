@@ -47,6 +47,13 @@ export const navItems = (pathname: string, storeId = ""): NavItem[] => [
     icon: "size",
   },
   {
+    title: "Colors",
+    href: `/${storeId}/admin/colors`,
+    label: "Colors",
+    active: pathname === `/${storeId}/admin/colors`,
+    icon: "palette",
+  },
+  {
     title: "Settings",
     href: `/${storeId}/admin/settings`,
     label: "Settings",
