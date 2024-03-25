@@ -21,6 +21,7 @@ import {
   MoreVertical,
   Pizza,
   Plus,
+  Ruler,
   Settings,
   SunMedium,
   Trash,
@@ -60,6 +61,7 @@ export const Icons = {
   pizza: Pizza,
   sun: SunMedium,
   moon: Moon,
+  size: Ruler,
   laptop: Laptop,
   gitHub: ({ ...props }: LucideProps) => (
     <svg

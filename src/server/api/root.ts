@@ -2,6 +2,7 @@ import { userRouter } from "@/server/api/routers/user"
 import { createCallerFactory, createTRPCRouter } from "@/server/api/trpc"
 import { billboardRouter } from "./routers/billboards.router"
 import { categoriesRouter } from "./routers/categories.router"
+import { sizesRouter } from "./routers/sizes.router"
 import { storeRouter } from "./routers/store.router"
 
 /**
@@ -14,6 +15,7 @@ export const appRouter = createTRPCRouter({
   store: storeRouter,
   billboard: billboardRouter,
   category: categoriesRouter,
+  size: sizesRouter,
 })
 
 // export type definition of API

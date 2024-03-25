@@ -3,6 +3,7 @@ import {
   ecomCmsBillBoards,
   ecomCmsCategories,
   ecomCmsProducts,
+  ecomCmsSizes,
   ecomCmsStores,
 } from "drizzle/schema"
 
@@ -32,6 +33,17 @@ export const ecomCmsCategoriesRelations = relations(
     billboard: one(ecomCmsBillBoards, {
       fields: [ecomCmsCategories.billboardId],
       references: [ecomCmsBillBoards.id],
+    }),
+    products: many(ecomCmsProducts),
+  })
+)
+
+export const ecomCmsSizesRelations = relations(
+  ecomCmsSizes,
+  ({ many, one }) => ({
+    store: one(ecomCmsStores, {
+      fields: [ecomCmsSizes.storeId],
+      references: [ecomCmsStores.id],
     }),
     products: many(ecomCmsProducts),
   })

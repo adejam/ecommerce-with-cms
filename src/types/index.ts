@@ -22,3 +22,9 @@ export type Category = Awaited<
 export type Categories = Awaited<
   ReturnType<(typeof serverTrpc)["category"]["fetchCategories"]>
 >
+
+export type Size = Awaited<ReturnType<(typeof serverTrpc)["size"]["fetchSize"]>>
+
+export type Sizes = Awaited<
+  ReturnType<(typeof serverTrpc)["size"]["fetchSizes"]>
+>
