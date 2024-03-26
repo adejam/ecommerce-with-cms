@@ -15,7 +15,11 @@ const useImageUploader = () => {
   const [uploadDone, setUploadDone] = useState(false)
   const [imageError, setImageError] = useState("")
 
-  const handleImageUpload = async (storeId: string, currentImageUrl = "") => {
+  const handleImageUpload = async (
+    storeId: string,
+    currentImageUrl = "",
+    folderPath = ""
+  ) => {
     setIsLoading(true)
     setUploadDone(false)
     setFailedImages([])
@@ -32,7 +36,8 @@ const useImageUploader = () => {
           const { error, success } = await handleFileUploads(
             form,
             storeId,
-            currentImageUrl
+            currentImageUrl,
+            folderPath
           )
           if (success) {
             setSavedImages((prevState) => [

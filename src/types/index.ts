@@ -36,3 +36,13 @@ export type Color = Awaited<
 export type Colors = Awaited<
   ReturnType<(typeof serverTrpc)["color"]["fetchColors"]>
 >
+
+export type Product = Awaited<
+  ReturnType<(typeof serverTrpc)["product"]["fetchProduct"]>
+>
+
+export type Products = Awaited<
+  ReturnType<(typeof serverTrpc)["product"]["fetchProducts"]>
+>
+
+export type Image = { url: string; id: string; productId: string }

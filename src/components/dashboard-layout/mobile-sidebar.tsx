@@ -33,11 +33,25 @@ export const navItems = (pathname: string, storeId = ""): NavItem[] => [
     icon: "billboard",
   },
   {
+    title: "Products",
+    href: `/${storeId}/admin/products`,
+    label: "Products",
+    active: pathname === `/${storeId}/admin/products`,
+    icon: "box",
+  },
+  {
+    title: "Orders",
+    href: `/${storeId}/admin/orders`,
+    label: "Orders",
+    active: pathname === `/${storeId}/admin/orders`,
+    icon: "shoppingBag",
+  },
+  {
     title: "Categories",
     href: `/${storeId}/admin/categories`,
     label: "Categories",
     active: pathname === `/${storeId}/admin/categories`,
-    icon: "laptop",
+    icon: "grid",
   },
   {
     title: "Sizes",

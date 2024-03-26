@@ -1,6 +1,7 @@
 import {
   AlertTriangle,
   ArrowRight,
+  Box,
   Check,
   ChevronLeft,
   ChevronRight,
@@ -9,6 +10,7 @@ import {
   CreditCard,
   File,
   FileText,
+  Grid,
   HelpCircle,
   Image,
   Laptop,
@@ -24,6 +26,7 @@ import {
   Plus,
   Ruler,
   Settings,
+  ShoppingBag,
   SunMedium,
   Trash,
   Twitter,
@@ -64,6 +67,9 @@ export const Icons = {
   moon: Moon,
   size: Ruler,
   laptop: Laptop,
+  box: Box,
+  grid: Grid,
+  shoppingBag: ShoppingBag,
   palette: Palette,
   gitHub: ({ ...props }: LucideProps) => (
     <svg

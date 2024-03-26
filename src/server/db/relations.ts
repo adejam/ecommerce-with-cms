@@ -3,6 +3,7 @@ import {
   ecomCmsBillBoards,
   ecomCmsCategories,
   ecomCmsColors,
+  ecomCmsProductImages,
   ecomCmsProducts,
   ecomCmsSizes,
   ecomCmsStores,
@@ -58,5 +59,38 @@ export const ecomCmsColorsRelations = relations(
       references: [ecomCmsStores.id],
     }),
     products: many(ecomCmsProducts),
+  })
+)
+
+export const ecomCmsProductsRelations = relations(
+  ecomCmsProducts,
+  ({ many, one }) => ({
+    store: one(ecomCmsStores, {
+      fields: [ecomCmsProducts.storeId],
+      references: [ecomCmsStores.id],
+    }),
+    size: one(ecomCmsSizes, {
+      fields: [ecomCmsProducts.sizeId],
+      references: [ecomCmsSizes.id],
+    }),
+    color: one(ecomCmsColors, {
+      fields: [ecomCmsProducts.colorId],
+      references: [ecomCmsColors.id],
+    }),
+    category: one(ecomCmsCategories, {
+      fields: [ecomCmsProducts.categoryId],
+      references: [ecomCmsCategories.id],
+    }),
+    images: many(ecomCmsProductImages),
+  })
+)
+
+export const ecomCmsProductImagessRelations = relations(
+  ecomCmsProductImages,
+  ({ one }) => ({
+    product: one(ecomCmsProducts, {
+      fields: [ecomCmsProductImages.productId],
+      references: [ecomCmsProducts.id],
+    }),
   })
 )

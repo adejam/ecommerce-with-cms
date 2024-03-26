@@ -46,6 +46,54 @@ export const deleteFile = async (fileName: string) => {
   }
 }
 
+export const deleteFiles = async (fileNames: string[]) => {
+  const supabaseApiClient = supabaseServerClient()
+  const { error } = await supabaseApiClient.storage
+    .from("ecommerce_assets")
+    .remove([...fileNames])
+  if (error) {
+    return {
+      success: false,
+      error: true,
+      message: "An error occured while deleting files",
+      data: null,
+    }
+  }
+
+  return {
+    success: true,
+    error: false,
+    message: "Files deleted successfully",
+    data: null,
+  }
+}
+
+interface DeleteResourceAssetsInterface {
+  resource: string
+  resourceId: string
+  resourceTarget: string
+  assetFieldName: string
+}
+
+export const deleteResourceAssets = async ({
+  resource,
+  resourceId,
+  resourceTarget,
+  assetFieldName,
+}: DeleteResourceAssetsInterface) => {
+  const supabaseApiClient = supabaseServerClient()
+  const { error, data } = await supabaseApiClient
+    .from(resource)
+    .select("*")
+    .eq(resourceTarget, resourceId)
+
+  if (data) {
+    const assetsName = data.map((d) => getImageNameFromUrl(d[assetFieldName]))
+    const res = await deleteFiles(assetsName)
+    return res
+  }
+}
+
 export const handleFileUploads = async (
   formData: FormData,
   storeId: string,
