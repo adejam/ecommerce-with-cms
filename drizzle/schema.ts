@@ -1,18 +1,19 @@
 import {
   pgTable,
+  foreignKey,
+  pgEnum,
+  uuid,
+  boolean,
+  text,
+  timestamp,
+  numeric,
+  integer,
+  jsonb,
   index,
   unique,
-  pgEnum,
   bigserial,
   varchar,
   bigint,
-  text,
-  timestamp,
-  foreignKey,
-  uuid,
-  integer,
-  numeric,
-  boolean,
   serial,
 } from "drizzle-orm/pg-core"
 import { sql } from "drizzle-orm"
@@ -43,6 +44,38 @@ export const codeChallengeMethod = pgEnum("code_challenge_method", [
 ])
 export const factorStatus = pgEnum("factor_status", ["verified", "unverified"])
 export const factorType = pgEnum("factor_type", ["webauthn", "totp"])
+
+export const ecomCmsOrders = pgTable("ecom_cms_orders", {
+  id: uuid("id").defaultRandom().primaryKey().notNull(),
+  buyerId: uuid("buyer_id").notNull(),
+  storeId: uuid("store_id")
+    .notNull()
+    .references(() => ecomCmsStores.id),
+  isPaid: boolean("is_paid").default(false).notNull(),
+  phone: text("phone"),
+  address: text("address"),
+  createdAt: timestamp("created_at", {
+    withTimezone: true,
+    mode: "string",
+  }).defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true, mode: "string" }),
+})
+
+export const ecomCmsOrderItems = pgTable("ecom_cms_order_items", {
+  id: uuid("id").defaultRandom().primaryKey().notNull(),
+  orderId: uuid("order_id")
+    .notNull()
+    .references(() => ecomCmsOrders.id, { onDelete: "cascade" }),
+  productId: uuid("product_id")
+    .notNull()
+    .references(() => ecomCmsProducts.id),
+  name: text("name").notNull(),
+  price: numeric("price", { precision: 8, scale: 2 }).notNull(),
+  quantity: integer("quantity").notNull(),
+  attributes: jsonb("attributes"),
+  createdAt: timestamp("created_at", { mode: "string" }),
+  updatedAt: timestamp("updated_at", { mode: "string" }),
+})
 
 export const personalAccessTokens = pgTable(
   "personal_access_tokens",

@@ -46,3 +46,11 @@ export type Products = Awaited<
 >
 
 export type Image = { url: string; id: string; productId: string }
+
+export type StoreOrders = Awaited<
+  ReturnType<(typeof serverTrpc)["order"]["fetchStoreOrders"]>
+>
+
+export type UserOrders = Awaited<
+  ReturnType<(typeof serverTrpc)["order"]["fetchUserOrders"]>
+>
