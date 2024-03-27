@@ -36,7 +36,9 @@ const DeleteStoreModal = ({ children, initialData }: Props) => {
           <DialogTitle>Delete store</DialogTitle>
           <DialogDescription>
             This action is irreversible. Type{" "}
-            <span className="text-red-500">&quot;{initialData.name}&quot;</span>{" "}
+            <span className="text-red-500">
+              &quot;{initialData?.name}&quot;
+            </span>{" "}
             to confirm.
           </DialogDescription>
         </DialogHeader>

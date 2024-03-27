@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { createTRPCRouter, protectedProcedure } from "../trpc"
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc"
 import {
   fetchProduct,
   fetchProducts,
@@ -11,6 +11,7 @@ import {
   deleteProductImage,
   insertProductImageSchema,
   addProductImages,
+  fetchFeaturedProducts,
 } from "../../controllers/Product.controller"
 
 const updateProductSchemavalues = z.object({
@@ -58,5 +59,10 @@ export const productRouter = createTRPCRouter({
     .mutation(async ({ input }) => {
       const res = await addProductImages(input.values, input.id)
       return res
+    }),
+  fetchFeaturedProducts: publicProcedure
+    .input(z.string())
+    .query(async ({ input }) => {
+      return await fetchFeaturedProducts(input)
     }),
 })

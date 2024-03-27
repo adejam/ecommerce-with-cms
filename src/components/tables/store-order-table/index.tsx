@@ -1,12 +1,12 @@
-"use Table"
+"use client"
 
 import { DataTable } from "@/components/ui/data-table"
 import { format } from "date-fns"
 import { currencyFormatter } from "@/lib/utils"
 import { trpc } from "@/trpc/react"
-import { StoreOrders } from "@/types"
+import { type StoreOrders } from "@/types"
 
-import { columns, OrderColumn } from "./columns"
+import { columns, type OrderColumn } from "./columns"
 
 interface OrderTableProps {
   initialData: StoreOrders
@@ -20,6 +20,8 @@ export const OrderTable: React.FC<OrderTableProps> = ({
   const { data: orders } = trpc.order.fetchStoreOrders.useQuery(storeId, {
     initialData,
   })
+
+  console.log(orders)
 
   const formattedOrders: OrderColumn[] = orders.map((item) => ({
     id: item.id,

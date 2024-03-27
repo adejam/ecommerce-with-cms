@@ -18,7 +18,7 @@ const useImageUploader = () => {
   const handleImageUpload = async (
     storeId: string,
     currentImageUrl = "",
-    folderPath = ""
+    folderPath = "billboards"
   ) => {
     setIsLoading(true)
     setUploadDone(false)

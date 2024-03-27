@@ -35,6 +35,25 @@ export const fetchProduct = async (storeId: string, productId: string) => {
   })
 }
 
+export const fetchFeaturedProducts = async (storeId: string) => {
+  if (!storeId) throw new Error("Bad request.")
+  return await db.query.ecomCmsProducts.findMany({
+    where: (ecomCmsProducts, { eq }) =>
+      and(
+        eq(ecomCmsProducts.storeId, storeId),
+        eq(ecomCmsProducts.isFeatured, true),
+        eq(ecomCmsProducts.isArchived, false)
+      ),
+    orderBy: (ecomCmsProducts, { desc }) => [desc(ecomCmsProducts.createdAt)],
+    with: {
+      size: true,
+      color: true,
+      category: true,
+      images: true,
+    },
+  })
+}
+
 export const deleteProduct = async (storeId: string, productId: string) => {
   await db
     .delete(ecomCmsProducts)

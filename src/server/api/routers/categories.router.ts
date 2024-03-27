@@ -8,7 +8,7 @@ import {
   deleteCategory,
 } from "./../../controllers/category.controller"
 import { z } from "zod"
-import { createTRPCRouter, protectedProcedure } from "../trpc"
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc"
 
 const updateCategorySchemavalues = z.object({
   values: updateCategorySchema,
@@ -16,7 +16,7 @@ const updateCategorySchemavalues = z.object({
 })
 
 export const categoriesRouter = createTRPCRouter({
-  fetchCategories: protectedProcedure
+  fetchCategories: publicProcedure
     .input(z.string())
     .query(async ({ input }) => {
       return await fetchCategories(input)

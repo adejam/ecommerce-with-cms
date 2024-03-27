@@ -29,6 +29,14 @@ export const fetchBillboard = async (storeId: string, billboardId: string) => {
   return billboards[0]
 }
 
+export const fetchStoreFrontBillboard = async (storeId: string) => {
+  if (!storeId) throw new Error("Bad request.")
+  return await db.query.ecomCmsBillBoards.findFirst({
+    where: (ecomCmsBillBoards, { eq }) =>
+      and(eq(ecomCmsBillBoards.storeId, storeId)),
+  })
+}
+
 export const deleteBillboard = async (storeId: string, billboardId: string) => {
   await db
     .delete(ecomCmsBillBoards)

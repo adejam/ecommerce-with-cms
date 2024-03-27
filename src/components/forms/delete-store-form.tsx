@@ -26,7 +26,7 @@ const DeleteStoreForm = ({ closeButton = <></>, initialData }: Props) => {
 
         <LoadingButton
           isLoading={deleteIsPending}
-          disabled={initialData.name !== nameValue || deleteIsPending}
+          disabled={initialData?.name !== nameValue || deleteIsPending}
           type="button"
           variant={"destructive"}
           onClick={deleteStore}

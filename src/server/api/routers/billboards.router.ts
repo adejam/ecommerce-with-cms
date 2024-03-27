@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { createTRPCRouter, protectedProcedure } from "../trpc"
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc"
 import {
   fetchBillboard,
   fetchBillboards,
@@ -8,6 +8,7 @@ import {
   updateBillboardSchema,
   updateBillboard,
   deleteBillboard,
+  fetchStoreFrontBillboard,
 } from "./../../controllers/billboard.controller"
 
 const updateBillboardSchemavalues = z.object({
@@ -41,5 +42,10 @@ export const billboardRouter = createTRPCRouter({
     .mutation(async ({ input }) => {
       await deleteBillboard(input.storeId, input.billboardId)
       return true
+    }),
+  fetchStoreFrontBillboard: publicProcedure
+    .input(z.string())
+    .query(async ({ input }) => {
+      return await fetchStoreFrontBillboard(input)
     }),
 })

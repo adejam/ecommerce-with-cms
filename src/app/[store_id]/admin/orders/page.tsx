@@ -21,11 +21,6 @@ const OrdersPage = async ({
             title={"Orders"}
             description="Manage orders for your store"
           />
-          <Link href={`/${store_id}/admin/orders/new`}>
-            <Button>
-              <Plus className="mr-2 h-4 w-4" /> Add New
-            </Button>
-          </Link>
         </div>
         <Separator />
         <OrderTable initialData={orders} storeId={store_id} />
