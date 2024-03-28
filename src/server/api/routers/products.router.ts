@@ -12,6 +12,9 @@ import {
   insertProductImageSchema,
   addProductImages,
   fetchFeaturedProducts,
+  fetchProductsByCategory,
+  fetchStorefrontProduct,
+  fetchProductsByFilters,
 } from "../../controllers/Product.controller"
 
 const updateProductSchemavalues = z.object({
@@ -64,5 +67,28 @@ export const productRouter = createTRPCRouter({
     .input(z.string())
     .query(async ({ input }) => {
       return await fetchFeaturedProducts(input)
+    }),
+  fetchProductsByCategory: publicProcedure
+    .input(z.string())
+    .query(async ({ input }) => {
+      return await fetchProductsByCategory(input)
+    }),
+
+  fetchStorefrontProduct: publicProcedure
+    .input(z.object({ storeId: z.string(), productId: z.string() }))
+    .query(async ({ input }) => {
+      return await fetchStorefrontProduct(input.storeId, input.productId)
+    }),
+
+  fetchProductsByFilters: publicProcedure
+    .input(
+      z.object({
+        categoryId: z.string(),
+        colorId: z.string().optional(),
+        sizeId: z.string().optional(),
+      })
+    )
+    .query(async ({ input }) => {
+      return await fetchProductsByFilters({ ...input })
     }),
 })

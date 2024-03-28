@@ -21,7 +21,7 @@ export const categoriesRouter = createTRPCRouter({
     .query(async ({ input }) => {
       return await fetchCategories(input)
     }),
-  fetchCategory: protectedProcedure
+  fetchCategory: publicProcedure
     .input(z.object({ storeId: z.string(), categoryId: z.string() }))
     .query(async ({ input }) => {
       return await fetchCategory(input.storeId, input.categoryId)

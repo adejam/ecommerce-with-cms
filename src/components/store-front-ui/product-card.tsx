@@ -3,21 +3,22 @@
 import Image from "next/image"
 import { type MouseEventHandler } from "react"
 import { Expand, ShoppingCart } from "lucide-react"
-import { useRouter } from "next/navigation"
+import { useParams, useRouter } from "next/navigation"
 
 import Currency from "@/components/ui/currency"
-import { type Product } from "@/types"
+import { type StorefrontProduct } from "@/types"
 import { Button } from "../ui/button"
 
 interface ProductCard {
-  data: Product
+  data: StorefrontProduct
 }
 
 const ProductCard: React.FC<ProductCard> = ({ data }) => {
   const router = useRouter()
+  const params = useParams()
 
   const handleClick = () => {
-    router.push(`/product/${data?.id}`)
+    router.push(`${params.store_id}/product/${data?.id}`)
   }
 
   const onPreview: MouseEventHandler<HTMLButtonElement> = (event) => {
@@ -29,6 +30,8 @@ const ProductCard: React.FC<ProductCard> = ({ data }) => {
     event.stopPropagation()
     console.log("here")
   }
+
+  if (!data) return null
 
   return (
     <div
@@ -65,7 +68,9 @@ const ProductCard: React.FC<ProductCard> = ({ data }) => {
       {/* Description */}
       <div>
         <p className="font-semibold text-lg">{data?.name}</p>
-        <p className="text-sm text-gray-500">{data?.category?.name}</p>
+        {data?.category && (
+          <p className="text-sm text-gray-500">{data?.category?.name}</p>
+        )}
       </div>
       {/* Price & Reiew */}
       <div className="flex items-center justify-between">

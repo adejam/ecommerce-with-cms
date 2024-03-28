@@ -1,8 +1,5 @@
 import { serverTrpc } from "@/trpc/server"
 import { Heading } from "@/components/ui/heading"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Plus } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
 import { OrderTable } from "@/components/tables/store-order-table"
 

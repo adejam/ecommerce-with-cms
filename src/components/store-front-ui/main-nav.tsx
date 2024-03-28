@@ -4,11 +4,11 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 
 import { cn } from "@/lib/utils"
-import { Category } from "@/types"
+import { Categories } from "@/types"
 import { trpc } from "@/trpc/react"
 
 interface MainNavProps {
-  initialData: Category[]
+  initialData: Categories
   storeId: string
 }
 
@@ -20,9 +20,9 @@ const MainNav: React.FC<MainNavProps> = ({ initialData, storeId }) => {
   const pathname = usePathname()
 
   const routes = data.map((route) => ({
-    href: `${storeId}/category/${route.id}`,
+    href: `/${storeId}/category/${route.id}`,
     label: route.name,
-    active: pathname === `${storeId}/category/${route.id}`,
+    active: pathname === `/${storeId}/category/${route.id}`,
   }))
 
   return (

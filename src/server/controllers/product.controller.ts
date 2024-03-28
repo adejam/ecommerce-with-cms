@@ -54,6 +54,69 @@ export const fetchFeaturedProducts = async (storeId: string) => {
   })
 }
 
+export const fetchProductsByCategory = async (categoryId: string) => {
+  if (!categoryId) throw new Error("Bad request.")
+  return await db.query.ecomCmsProducts.findMany({
+    where: (ecomCmsProducts, { eq }) =>
+      and(
+        eq(ecomCmsProducts.categoryId, categoryId),
+        eq(ecomCmsProducts.isArchived, false)
+      ),
+    orderBy: (ecomCmsProducts, { desc }) => [desc(ecomCmsProducts.createdAt)],
+    with: {
+      size: true,
+      color: true,
+      category: true,
+      images: true,
+    },
+  })
+}
+
+interface filterData {
+  categoryId: string
+  colorId?: string | null
+  sizeId?: string | null
+}
+
+export const fetchProductsByFilters = async ({
+  categoryId,
+  sizeId = null,
+  colorId = null,
+}: filterData) => {
+  if (!categoryId) throw new Error("Bad request.")
+  const eqq = (eq: any) => {
+    if (sizeId && !colorId) {
+      return eq(ecomCmsProducts.sizeId, sizeId)
+    }
+
+    if (colorId && !sizeId) {
+      return eq(ecomCmsProducts.colorId, colorId)
+    }
+
+    if (sizeId && colorId) {
+      return (
+        eq(ecomCmsProducts.colorId, colorId), eq(ecomCmsProducts.sizeId, sizeId)
+      )
+    }
+  }
+
+  return await db.query.ecomCmsProducts.findMany({
+    where: (ecomCmsProducts, { eq }) =>
+      and(
+        eq(ecomCmsProducts.categoryId, categoryId),
+        eq(ecomCmsProducts.isArchived, false),
+        eqq(eq)
+      ),
+    orderBy: (ecomCmsProducts, { desc }) => [desc(ecomCmsProducts.createdAt)],
+    with: {
+      size: true,
+      color: true,
+      category: true,
+      images: true,
+    },
+  })
+}
+
 export const deleteProduct = async (storeId: string, productId: string) => {
   await db
     .delete(ecomCmsProducts)
@@ -159,4 +222,25 @@ export const addProductImages = async (
     .returning()
 
   return images
+}
+
+export const fetchStorefrontProduct = async (
+  storeId: string,
+  productId: string
+) => {
+  if (!storeId || !productId) throw new Error("Bad request.")
+  return await db.query.ecomCmsProducts.findFirst({
+    where: (ecomCmsProducts, { eq }) =>
+      and(
+        eq(ecomCmsProducts.storeId, storeId),
+        eq(ecomCmsProducts.id, productId)
+      ),
+    orderBy: (ecomCmsProducts, { desc }) => [desc(ecomCmsProducts.createdAt)],
+    with: {
+      size: true,
+      color: true,
+      category: true,
+      images: true,
+    },
+  })
 }

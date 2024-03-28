@@ -1,3 +1,4 @@
+import { publicProcedure } from "@/server/api/trpc"
 import {
   createNewColor,
   deleteColor,
@@ -16,7 +17,7 @@ const updateColorSchemavalues = z.object({
 })
 
 export const colorsRouter = createTRPCRouter({
-  fetchColors: protectedProcedure.input(z.string()).query(async ({ input }) => {
+  fetchColors: publicProcedure.input(z.string()).query(async ({ input }) => {
     return await fetchColors(input)
   }),
   fetchColor: protectedProcedure

@@ -8,7 +8,7 @@ import {
   updateSizeSchema,
 } from "@/server/controllers/sizes.controller"
 import { z } from "zod"
-import { createTRPCRouter, protectedProcedure } from "../trpc"
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc"
 
 const updateSizeSchemavalues = z.object({
   values: updateSizeSchema,
@@ -16,7 +16,7 @@ const updateSizeSchemavalues = z.object({
 })
 
 export const sizesRouter = createTRPCRouter({
-  fetchSizes: protectedProcedure.input(z.string()).query(async ({ input }) => {
+  fetchSizes: publicProcedure.input(z.string()).query(async ({ input }) => {
     return await fetchSizes(input)
   }),
   fetchSize: protectedProcedure
