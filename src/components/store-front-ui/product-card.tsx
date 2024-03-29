@@ -8,6 +8,7 @@ import { useParams, useRouter } from "next/navigation"
 import Currency from "@/components/ui/currency"
 import { type StorefrontProduct } from "@/types"
 import { Button } from "../ui/button"
+import usePreviewModal from "@/hooks/use-preview-modal"
 
 interface ProductCard {
   data: StorefrontProduct
@@ -16,14 +17,15 @@ interface ProductCard {
 const ProductCard: React.FC<ProductCard> = ({ data }) => {
   const router = useRouter()
   const params = useParams()
+  const previewModal = usePreviewModal()
 
   const handleClick = () => {
-    router.push(`${params.store_id}/product/${data?.id}`)
+    router.push(`/${params.store_id}/product/${data?.id}`)
   }
 
   const onPreview: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.stopPropagation()
-    console.log("here")
+    previewModal.onOpen(data)
   }
 
   const onAddToCart: MouseEventHandler<HTMLButtonElement> = (event) => {
@@ -52,13 +54,16 @@ const ProductCard: React.FC<ProductCard> = ({ data }) => {
               className="rounded-full flex items-center justify-center bg-white border shadow-md p-2 hover:scale-110 transition"
               onClick={onPreview}
               size={"icon"}
+              variant="ghost"
             >
               <Expand size={20} className="text-gray-600" />
             </Button>
+
             <Button
               className="rounded-full flex items-center justify-center bg-white border shadow-md p-2 hover:scale-110 transition"
               onClick={onAddToCart}
               size={"icon"}
+              variant="ghost"
             >
               <ShoppingCart size={20} className="text-gray-600" />
             </Button>

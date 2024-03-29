@@ -1,5 +1,6 @@
 import Footer from "@/components/store-front-ui/footer"
 import Navbar from "@/components/store-front-ui/navbar"
+import PreviewModal from "@/components/store-front-ui/preview-modal"
 import React from "react"
 
 type Props = {
@@ -13,6 +14,7 @@ const layout = async ({ children, params: { store_id } }: Props) => {
   return (
     <>
       <Navbar storeId={store_id} />
+      <PreviewModal />
       {children}
       <Footer />
     </>
