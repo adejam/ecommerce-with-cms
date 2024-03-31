@@ -6,6 +6,7 @@ import Currency from "@/components/ui/currency"
 import { Button } from "@/components/ui/button"
 import { StorefrontProduct } from "@/types"
 import { trpc } from "@/trpc/react"
+import useCart from "@/hooks/use-cart"
 
 interface InfoProps {
   initialData: StorefrontProduct
@@ -20,6 +21,10 @@ const Info: React.FC<InfoProps> = ({ initialData, storeId, productId }) => {
       initialData,
     }
   )
+  const cart = useCart()
+  const onAddToCart = () => {
+    cart.addItem(data)
+  }
 
   if (!data) return null
 
@@ -49,6 +54,7 @@ const Info: React.FC<InfoProps> = ({ initialData, storeId, productId }) => {
         <Button
           type="button"
           className="flex items-center gap-x-2 rounded-full"
+          onClick={onAddToCart}
         >
           Add To Cart
           <ShoppingCart size={20} />

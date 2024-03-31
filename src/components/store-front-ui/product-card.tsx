@@ -9,6 +9,7 @@ import Currency from "@/components/ui/currency"
 import { type StorefrontProduct } from "@/types"
 import { Button } from "../ui/button"
 import usePreviewModal from "@/hooks/use-preview-modal"
+import useCart from "@/hooks/use-cart"
 
 interface ProductCard {
   data: StorefrontProduct
@@ -16,6 +17,7 @@ interface ProductCard {
 
 const ProductCard: React.FC<ProductCard> = ({ data }) => {
   const router = useRouter()
+  const cart = useCart()
   const params = useParams()
   const previewModal = usePreviewModal()
 
@@ -30,7 +32,7 @@ const ProductCard: React.FC<ProductCard> = ({ data }) => {
 
   const onAddToCart: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.stopPropagation()
-    console.log("here")
+    cart.addItem(data)
   }
 
   if (!data) return null
