@@ -190,7 +190,7 @@ export const ecomCmsProductImages = pgTable("ecom_cms_product_images", {
 
 export const ecomCmsOrders = pgTable("ecom_cms_orders", {
   id: uuid("id").defaultRandom().primaryKey().notNull(),
-  buyerId: uuid("buyer_id").notNull(),
+  buyerId: uuid("buyer_id"),
   storeId: uuid("store_id")
     .notNull()
     .references(() => ecomCmsStores.id),
@@ -202,6 +202,7 @@ export const ecomCmsOrders = pgTable("ecom_cms_orders", {
     mode: "string",
   }).defaultNow(),
   updatedAt: timestamp("updated_at", { withTimezone: true, mode: "string" }),
+  buyerEmail: text("buyer_email"),
 })
 
 export const ecomCmsOrderItems = pgTable("ecom_cms_order_items", {

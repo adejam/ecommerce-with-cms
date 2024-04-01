@@ -8,6 +8,7 @@ interface CartStore {
   items: StorefrontProduct[]
   addItem: (data: StorefrontProduct) => void
   removeItem: (id: string) => void
+  removeStoreCartItems: (storeId: string) => void
   removeAll: () => void
 }
 
@@ -31,6 +32,11 @@ const useCart = create(
         toast.success("Item removed from cart.")
       },
       removeAll: () => set({ items: [] }),
+      removeStoreCartItems: (storeId: string) => {
+        set({
+          items: [...get().items.filter((item) => item?.storeId !== storeId)],
+        })
+      },
     }),
     {
       name: "cart-storage",

@@ -1,3 +1,4 @@
+import { ecomCmsOrderItems } from "./../../../drizzle/schema"
 import { ecomCmsOrders } from "../../../drizzle/schema"
 import { db } from "../db"
 import { and, eq } from "drizzle-orm"
@@ -35,10 +36,6 @@ export const fetchStoreOrder = async (storeId: string, orderId: string) => {
     where: (ecomCmsOrders, { eq }) =>
       and(eq(ecomCmsOrders.storeId, storeId), eq(ecomCmsOrders.id, orderId)),
     orderBy: (ecomCmsOrders, { desc }) => [desc(ecomCmsOrders.createdAt)],
-    // with: {
-    //   orderItems: true,
-    //   store: true
-    // },
   })
 }
 
@@ -48,51 +45,51 @@ export const fetchUserOrder = async (userId: string, orderId: string) => {
     where: (ecomCmsOrders, { eq }) =>
       and(eq(ecomCmsOrders.id, orderId), eq(ecomCmsOrders.buyerId, userId)),
     orderBy: (ecomCmsOrders, { desc }) => [desc(ecomCmsOrders.createdAt)],
-    // with: {
-    //   orderItems: true,
-    //   store: true
-    // },
   })
 }
 
-// export const deleteOrder = async (storeId: string, OrderId: string) => {
-//   await db
-//     .delete(ecomCmsOrders)
-//     .where(
-//       and(eq(ecomCmsOrders.storeId, storeId), eq(ecomCmsOrders.id, OrderId))
-//     )
-// }
+export const insertOrderSchema = createInsertSchema(ecomCmsOrders)
+export const insertOrderItemSchema = createInsertSchema(ecomCmsOrderItems)
 
-// export const insertOrderSchema = createInsertSchema(ecomCmsOrders)
-// export const updateOrderSchema = createInsertSchema(ecomCmsOrders).partial()
+export const createNewOrder = async (
+  values: z.infer<typeof insertOrderSchema>,
+  orderItemsValues: z.infer<typeof insertOrderItemSchema>[],
+  userId: string
+) => {
+  const store = await fetchStoreById(values.storeId)
 
-// export const createNewOrder = async (
-//   values: z.infer<typeof insertOrderSchema>,
-//   userId: string
-// ) => {
-//   const store = await fetchStoreById(values.storeId)
+  if (!store || store.userId !== userId) throw new Error("Bad request")
 
-//   if (!store || store.userId !== userId) throw new Error("Bad request")
+  const orderData = await db
+    .insert(ecomCmsOrders)
+    .values({ ...values, updatedAt: currentDate() })
+    .returning()
+  const order = orderData[0]
 
-//   const OrderData = await db
-//     .insert(ecomCmsOrders)
-//     .values({ ...values, updatedAt: currentDate() })
-//     .returning()
-//   return OrderData[0]
-// }
+  if (order) {
+    const orderItemsData = orderItemsValues
+      .filter((item) => item.productId)
+      .map((item) => ({ ...item, orderId: order.id, updatedAt: currentDate() }))
+    await db.insert(ecomCmsOrderItems).values([...orderItemsData])
+  }
 
-// export const updateOrder = async (
-//   values: z.infer<typeof updateOrderSchema>,
-//   id: string,
-//   userId: string
-// ) => {
-//   if (!values.storeId) throw new Error("Bad request!")
+  return order
+}
 
-//   const store = await fetchStoreById(values.storeId)
-//   if (!store || store.userId !== userId) throw new Error("Bad request")
+export const setPaymentMadeForPaid = async (
+  storeId: string,
+  orderId: string,
+  userId: string
+) => {
+  if (!storeId || !orderId) throw new Error("Bad request!")
 
-//   await db
-//     .update(ecomCmsOrders)
-//     .set({ ...values, updatedAt: currentDate() })
-//     .where(and(eq(ecomCmsOrders.storeId, store.id), eq(ecomCmsOrders.id, id)))
-// }
+  const store = await fetchStoreById(storeId)
+  if (!store || store.userId !== userId) throw new Error("Bad request")
+
+  await db
+    .update(ecomCmsOrders)
+    .set({ isPaid: true, updatedAt: currentDate() })
+    .where(
+      and(eq(ecomCmsOrders.storeId, store.id), eq(ecomCmsOrders.id, orderId))
+    )
+}

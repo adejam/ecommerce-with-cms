@@ -59,10 +59,10 @@ export type FeaturedProducts = Awaited<
   ReturnType<(typeof serverTrpc)["product"]["fetchFeaturedProducts"]>
 >
 
-// export type CategoryProducts = Awaited<
-//   ReturnType<(typeof serverTrpc)["product"]["fetchProductsByCategory"]>
-// >
-
 export type StorefrontProduct = Awaited<
   ReturnType<(typeof serverTrpc)["product"]["fetchStorefrontProduct"]>
+>
+
+export type StoreOrder = Awaited<
+  ReturnType<(typeof serverTrpc)["order"]["fetchStoreOrder"]>
 >

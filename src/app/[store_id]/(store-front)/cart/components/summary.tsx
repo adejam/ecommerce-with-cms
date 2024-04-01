@@ -1,39 +1,20 @@
 "use client"
 
-import { useEffect } from "react"
-import { useParams, useSearchParams } from "next/navigation"
+import { useParams } from "next/navigation"
 
-import { Button } from "@/components/ui/button"
 import Currency from "@/components/ui/currency"
 import useCart from "@/hooks/use-cart"
-import { toast } from "sonner"
+import { CheckoutForm } from "@/components/forms/checkout-form"
 
 const Summary = () => {
-  const searchParams = useSearchParams()
   const { store_id } = useParams()
   const items = useCart((state) =>
     state.items.filter((item) => (store_id ? item?.storeId === store_id : item))
   )
-  const removeAll = useCart((state) => state.removeAll)
-
-  useEffect(() => {
-    if (searchParams.get("success")) {
-      toast.success("Payment completed.")
-      removeAll()
-    }
-
-    if (searchParams.get("canceled")) {
-      toast.error("Something went wrong.")
-    }
-  }, [searchParams, removeAll])
 
   const totalPrice = items.reduce((total, item) => {
     return total + Number(item?.price)
   }, 0)
-
-  const onCheckout = async () => {
-    console.log("good")
-  }
 
   return (
     <div className="mt-16 rounded-lg bg-gray-50 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8">
@@ -44,13 +25,7 @@ const Summary = () => {
           <Currency value={totalPrice} />
         </div>
       </div>
-      <Button
-        onClick={onCheckout}
-        disabled={items.length === 0}
-        className="w-full mt-6"
-      >
-        Checkout
-      </Button>
+      <CheckoutForm cartItems={items} />
     </div>
   )
 }
