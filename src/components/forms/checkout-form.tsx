@@ -63,7 +63,7 @@ export const CheckoutForm: React.FC<Props> = ({ cartItems }) => {
               name="phone"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>Phone Number</FormLabel>
                   <FormControl>
                     <Input
                       disabled={isPending}
@@ -80,7 +80,7 @@ export const CheckoutForm: React.FC<Props> = ({ cartItems }) => {
               name="address"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>Shipping Address</FormLabel>
                   <FormControl>
                     <Textarea
                       disabled={isPending}
@@ -93,7 +93,7 @@ export const CheckoutForm: React.FC<Props> = ({ cartItems }) => {
               )}
             />
             <FormItem>
-              <FormLabel>Billboard</FormLabel>
+              <FormLabel>Payment Type</FormLabel>
               <Select
                 disabled={true}
                 value={"pay_with_cash"}
@@ -103,7 +103,7 @@ export const CheckoutForm: React.FC<Props> = ({ cartItems }) => {
                   <SelectTrigger>
                     <SelectValue
                       defaultValue={"pay_with_cash"}
-                      placeholder="Select a billboard"
+                      placeholder="Select payment type"
                     />
                   </SelectTrigger>
                 </FormControl>

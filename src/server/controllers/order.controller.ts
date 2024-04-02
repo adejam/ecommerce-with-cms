@@ -53,12 +53,11 @@ export const insertOrderItemSchema = createInsertSchema(ecomCmsOrderItems)
 
 export const createNewOrder = async (
   values: z.infer<typeof insertOrderSchema>,
-  orderItemsValues: z.infer<typeof insertOrderItemSchema>[],
-  userId: string
+  orderItemsValues: z.infer<typeof insertOrderItemSchema>[]
 ) => {
   const store = await fetchStoreById(values.storeId)
 
-  if (!store || store.userId !== userId) throw new Error("Bad request")
+  if (!store) throw new Error("Bad request")
 
   const orderData = await db
     .insert(ecomCmsOrders)

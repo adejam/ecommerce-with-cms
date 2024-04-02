@@ -8,7 +8,7 @@ import {
   setPaymentMadeForPaid,
 } from "@/server/controllers/order.controller"
 import { z } from "zod"
-import { createTRPCRouter, protectedProcedure } from "../trpc"
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc"
 
 export const orderRouter = createTRPCRouter({
   fetchStoreOrders: protectedProcedure
@@ -29,19 +29,15 @@ export const orderRouter = createTRPCRouter({
   fetchUserOrders: protectedProcedure.query(async ({ ctx }) => {
     return await fetchStoreOrders(ctx.session.user.id)
   }),
-  createNewOrder: protectedProcedure
+  createNewOrder: publicProcedure
     .input(
       z.object({
         values: insertOrderSchema,
         orderItemsValues: z.array(insertOrderItemSchema),
       })
     )
-    .mutation(async ({ ctx, input }) => {
-      return await createNewOrder(
-        input.values,
-        input.orderItemsValues,
-        ctx.session.user.id
-      )
+    .mutation(async ({ input }) => {
+      return await createNewOrder(input.values, input.orderItemsValues)
     }),
   setPaymentMadeForPaid: protectedProcedure
     .input(z.object({ storeId: z.string(), orderId: z.string() }))
