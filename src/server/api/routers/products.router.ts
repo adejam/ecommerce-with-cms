@@ -15,7 +15,7 @@ import {
   fetchProductsByCategory,
   fetchStorefrontProduct,
   fetchProductsByFilters,
-} from "../../controllers/Product.controller"
+} from "../../controllers/product.controller"
 
 const updateProductSchemavalues = z.object({
   values: updateProductSchema,

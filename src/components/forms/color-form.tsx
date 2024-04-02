@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/form"
 import { Separator } from "@/components/ui/separator"
 import { Heading } from "@/components/ui/heading"
-import useMutateColor from "@/hooks/use-mutate-Color"
+import useMutateColor from "@/hooks/use-mutate-color"
 import LoadingButton from "../ui/loading-button"
 import { ConfirmationModal } from "../modals/confirmation-modal"
 import { Color } from "@/types"

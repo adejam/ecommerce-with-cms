@@ -16,7 +16,7 @@ import {
 import { ColorColumn } from "./columns"
 import { toast } from "sonner"
 import { ConfirmationModal } from "@/components/modals/confirmation-modal"
-import useMutateColor from "@/hooks/use-mutate-Color"
+import useMutateColor from "@/hooks/use-mutate-color"
 import { trpc } from "@/trpc/react"
 
 interface CellActionProps {
