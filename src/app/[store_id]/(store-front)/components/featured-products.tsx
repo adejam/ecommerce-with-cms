@@ -2,7 +2,7 @@
 
 import ProductList from "@/components/store-front-ui/product-list"
 import { trpc } from "@/trpc/react"
-import { FeaturedProducts } from "@/types"
+import { type FeaturedProducts } from "@/types"
 import React from "react"
 
 interface Props {
@@ -10,7 +10,7 @@ interface Props {
   initialData: FeaturedProducts
 }
 
-const FeaturedProducts = ({ initialData, storeId }: Props) => {
+const FeaturedProductsView = ({ initialData, storeId }: Props) => {
   const { data: items } = trpc.product.fetchFeaturedProducts.useQuery(storeId, {
     initialData,
     refetchInterval: 1000,
@@ -18,4 +18,4 @@ const FeaturedProducts = ({ initialData, storeId }: Props) => {
   return <ProductList title="Featured Products" items={items} />
 }
 
-export default FeaturedProducts
+export default FeaturedProductsView
