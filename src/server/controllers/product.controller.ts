@@ -184,7 +184,7 @@ export const updateProduct = async (
 
   const store = await fetchStoreById(values?.product.storeId)
   if (!store || store.userId !== userId) throw new Error("Bad request")
-  const { product, images } = values
+  const { product } = values
 
   await db
     .update(ecomCmsProducts)

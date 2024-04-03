@@ -34,8 +34,8 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
 
   const { deleteIsPending, deleteColor } = useMutateColor(color)
 
-  const onCopy = (id: string) => {
-    navigator.clipboard.writeText(id)
+  const onCopy = async (id: string) => {
+    await navigator.clipboard.writeText(id)
     toast.success("Color ID copied to clipboard.")
   }
 
@@ -61,7 +61,9 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() =>
-              router.push(`/${params.store_id}/admin/colors/${data.id}`)
+              router.push(
+                `/${params.store_id as string}/admin/colors/${data.id}`
+              )
             }
           >
             <Edit className="mr-2 h-4 w-4" /> Update

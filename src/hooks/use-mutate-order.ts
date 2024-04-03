@@ -68,15 +68,15 @@ const useMutateOrder = (
   async function onSubmit(values: OrderFormValues) {
     if (!params.store_id || !cartItems) return
     const attributes = cartItems?.map((item) => {
-      let attributesToReturn: any = {}
+      const attributesToReturn: any = {}
       if (item?.size) {
-        attributesToReturn["size"] = {
+        attributesToReturn.size = {
           name: item.size.name,
           value: item.size.value,
         }
       }
       if (item?.color) {
-        attributesToReturn["color"] = {
+        attributesToReturn.color = {
           name: item.color.name,
           value: item.color.value,
         }

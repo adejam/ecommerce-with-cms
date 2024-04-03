@@ -1,8 +1,6 @@
 import { handleFileUploads } from "@/app/actions"
-import React, { useState } from "react"
+import { useState } from "react"
 import { toast } from "sonner"
-
-type Props = {}
 
 const useImageUploader = () => {
   const [images, setImages] = useState<File[]>([])

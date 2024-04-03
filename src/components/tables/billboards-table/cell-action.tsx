@@ -1,9 +1,7 @@
 "use client"
 
-// import axios from "axios";
 import { useState } from "react"
-import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react"
-// import { toast } from "react-hot-toast";
+import { Edit, MoreHorizontal, Trash } from "lucide-react"
 import { useParams, useRouter } from "next/navigation"
 
 import { Button } from "@/components/ui/button"
@@ -53,7 +51,9 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuItem
             onClick={() =>
-              router.push(`/${params.store_id}/admin/billboards/${data.id}`)
+              router.push(
+                `/${params.store_id as string}/admin/billboards/${data.id}`
+              )
             }
           >
             <Edit className="mr-2 h-4 w-4" /> Update

@@ -1,6 +1,5 @@
 "use server"
 
-import { createAnonServerClient } from "@/lib/supabase/supabase-anon-server-client"
 import { supabaseServerClient } from "@/lib/supabase/supabase-server-client"
 import { getImageNameFromUrl } from "@/lib/utils"
 

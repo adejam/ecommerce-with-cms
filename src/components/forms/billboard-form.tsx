@@ -110,7 +110,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
                         />
                       </div>
                     )}
-                    <Input type="hidden" {...field} />
+                    {/* <Input type="hidden" {...field} /> */}
                   </>
                 </FormControl>
                 <FormMessage />

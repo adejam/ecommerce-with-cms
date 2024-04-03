@@ -8,13 +8,13 @@ const useUserData = () => {
   const trpcContext = trpc.useUtils()
   const { data: user } = trpc.user.getUser.useQuery()
 
-  const signOut = () => {
+  const signOut = async () => {
     if (user) {
       setSigninOut(true)
-      supabase.auth
+      await supabase.auth
         .signOut()
-        .then(() => {
-          trpcContext.user.getUser.invalidate()
+        .then(async () => {
+          await trpcContext.user.getUser.invalidate()
         })
         .finally(() => {
           setSigninOut(false)

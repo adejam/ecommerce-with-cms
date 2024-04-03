@@ -90,7 +90,7 @@ const useMutateBillboard = (initialData?: Billboard) => {
     if (images.length) {
       const data = await handleImageUpload(
         storeId,
-        (billboard && billboard.imageUrl) || ""
+        (billboard && billboard?.imageUrl) || ""
       )
       if (data.success && data.images[0]) {
         if (billboard) {

@@ -12,8 +12,6 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-// import { useCategoryModal } from "@/hooks/use-category-modal"
-// import { AlertModal } from "@/components/modals/alert-modal"
 
 import { CategoryColumn } from "./columns"
 import { toast } from "sonner"
@@ -38,8 +36,8 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     category
   )
 
-  const onCopy = (id: string) => {
-    navigator.clipboard.writeText(id)
+  const onCopy = async (id: string) => {
+    await navigator.clipboard.writeText(id)
     toast.success("Category ID copied to clipboard.")
   }
 
@@ -65,7 +63,9 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() =>
-              router.push(`/${params.store_id}/admin/categories/${data.id}`)
+              router.push(
+                `/${params.store_id as string}/admin/categories/${data.id}`
+              )
             }
           >
             <Edit className="mr-2 h-4 w-4" /> Update

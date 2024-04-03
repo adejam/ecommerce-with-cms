@@ -315,7 +315,6 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                   <FormControl>
                     <Checkbox
                       checked={field.value}
-                      // @ts-ignore
                       onCheckedChange={field.onChange}
                     />
                   </FormControl>
@@ -336,7 +335,6 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                   <FormControl>
                     <Checkbox
                       checked={field.value}
-                      // @ts-ignore
                       onCheckedChange={field.onChange}
                     />
                   </FormControl>
@@ -368,8 +366,8 @@ export const ProductForm: React.FC<ProductFormProps> = ({
       <ConfirmationModal
         isOpen={imageDeleteModalOpen}
         onClose={() => setImageDeleteModalOpen(false)}
-        onConfirm={() => {
-          imageToDelete && deleteProductImage(imageToDelete)
+        onConfirm={async () => {
+          imageToDelete && (await deleteProductImage(imageToDelete))
           setImageDeleteModalOpen(false)
         }}
         loading={deleteImageIsPending}

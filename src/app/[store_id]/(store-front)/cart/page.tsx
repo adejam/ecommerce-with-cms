@@ -20,10 +20,7 @@ interface Props {
   }
 }
 
-const CartPage = async ({
-  params: { store_id },
-  searchParams: { oid },
-}: Props) => {
+const CartPage = ({ params: { store_id }, searchParams: { oid } }: Props) => {
   const [isMounted, setIsMounted] = useState(false)
   const cart = useCart()
 

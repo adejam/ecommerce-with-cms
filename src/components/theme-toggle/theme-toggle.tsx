@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { MoonIcon, SunIcon } from "lucide-react"
 import { firstCharToUpperCase } from "@/lib/utils"
-type CompProps = {}
 
 const themes = ["light", "dark", "system"]
 
