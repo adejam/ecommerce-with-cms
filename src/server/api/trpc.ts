@@ -9,7 +9,7 @@
 import { initTRPC, TRPCError } from "@trpc/server"
 import superjson from "superjson"
 import { ZodError } from "zod"
-import { Session } from "@supabase/supabase-js"
+import { type Session } from "@supabase/supabase-js"
 
 /**
  * 1. CONTEXT

@@ -1,11 +1,16 @@
 import { checkoutSchema } from "./../validation-schemas/checkout.schema"
 import { trpc } from "@/trpc/react"
-import { StorefrontProduct, StoreOrder } from "@/types"
+import type {
+  NaveValueType,
+  Size,
+  StorefrontProduct,
+  StoreOrder,
+} from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useParams, useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
-import * as z from "zod"
+import { type z } from "zod"
 import useCart from "./use-cart"
 
 export type OrderFormValues = z.infer<typeof checkoutSchema>
@@ -57,7 +62,7 @@ const useMutateOrder = (
 
   const form = useForm<OrderFormValues>({
     resolver: zodResolver(checkoutSchema),
-    defaultValues: order || {
+    defaultValues: (order as unknown as OrderFormValues) || {
       buyerEmail: "",
       address: "",
       phone: "",
@@ -68,7 +73,10 @@ const useMutateOrder = (
   async function onSubmit(values: OrderFormValues) {
     if (!params.store_id || !cartItems) return
     const attributes = cartItems?.map((item) => {
-      const attributesToReturn: any = {}
+      const attributesToReturn: {
+        size?: NaveValueType
+        color?: NaveValueType
+      } = {}
       if (item?.size) {
         attributesToReturn.size = {
           name: item.size.name,

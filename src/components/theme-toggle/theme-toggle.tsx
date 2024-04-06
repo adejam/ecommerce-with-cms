@@ -14,7 +14,7 @@ import { firstCharToUpperCase } from "@/lib/utils"
 
 const themes = ["light", "dark", "system"]
 
-export default function ThemeToggle({}: CompProps) {
+export default function ThemeToggle() {
   const { setTheme } = useTheme()
   return (
     <DropdownMenu>

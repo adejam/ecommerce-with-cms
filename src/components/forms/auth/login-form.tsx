@@ -17,7 +17,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { z } from "zod"
+import { type z } from "zod"
 import { loginSchema } from "@/validation-schemas/auth.schema"
 import { loginAction } from "@/app/(auth)/actions"
 import SubmitButton from "@/components/ui/submit-button"

@@ -1,7 +1,7 @@
 import { deleteFile, deleteResourceAssets } from "@/app/actions"
 import { computeImageUrl, getImageNameFromUrl } from "@/lib/utils"
 import { trpc } from "@/trpc/react"
-import { Image, Product } from "@/types"
+import type { Image, Product } from "@/types"
 import { productSchema } from "@/validation-schemas/product.schema"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useParams, useRouter } from "next/navigation"
@@ -9,7 +9,7 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { v4 } from "uuid"
-import * as z from "zod"
+import { type z } from "zod"
 import useImageUploader from "./use-image-uploader"
 
 export type ProductFormValues = z.infer<typeof productSchema>

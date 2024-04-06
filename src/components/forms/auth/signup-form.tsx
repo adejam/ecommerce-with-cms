@@ -17,7 +17,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { z } from "zod"
+import { type z } from "zod"
 
 import { signupSchema } from "@/validation-schemas/auth.schema"
 import { signupAction } from "@/app/(auth)/actions"

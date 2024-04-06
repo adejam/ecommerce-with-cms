@@ -27,7 +27,7 @@ export const ProductsTable: React.FC<ProductsClientProps> = ({
     isFeatured: item.isFeatured,
     isArchived: item.isArchived,
     price: currencyFormatter.format(Number(item.price)),
-    category: item.category.name,
+    category: item?.category?.name || "",
     size: item?.size?.name || "",
     color: item?.color?.value || "",
     createdAt: item.createdAt ? format(item.createdAt, "MMMM do, yyyy") : "",

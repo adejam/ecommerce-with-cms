@@ -1,14 +1,14 @@
 import { deleteFile } from "@/app/actions"
 import { computeImageUrl, getImageNameFromUrl } from "@/lib/utils"
 import { trpc } from "@/trpc/react"
-import { Billboard, type Store } from "@/types"
+import { Billboard } from "@/types"
 import { billBoardSchema } from "@/validation-schemas/billboard.schema"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useParams, useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
-import * as z from "zod"
+import { type z } from "zod"
 import useImageUploader from "./use-image-uploader"
 
 export type BillboardFormValues = z.infer<typeof billBoardSchema>
@@ -88,10 +88,7 @@ const useMutateBillboard = (initialData?: Billboard) => {
     }
 
     if (images.length) {
-      const data = await handleImageUpload(
-        storeId,
-        (billboard && billboard?.imageUrl) || ""
-      )
+      const data = await handleImageUpload(storeId, billboard?.imageUrl || "")
       if (data.success && data.images[0]) {
         if (billboard) {
           mutateUpdateBillboard({

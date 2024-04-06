@@ -1,4 +1,4 @@
-import { serverTrpc } from "./../trpc/server"
+import { type serverTrpc } from "./../trpc/server"
 export type Store = Awaited<
   ReturnType<(typeof serverTrpc)["store"]["fetchStoreById"]>
 >
@@ -66,3 +66,8 @@ export type StorefrontProduct = Awaited<
 export type StoreOrder = Awaited<
   ReturnType<(typeof serverTrpc)["order"]["fetchStoreOrder"]>
 >
+
+export type NaveValueType = {
+  name: string
+  value: string
+}

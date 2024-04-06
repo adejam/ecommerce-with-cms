@@ -1,10 +1,10 @@
 import { trpc } from "@/trpc/react"
-import { Size } from "@/types"
+import { type Size } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useParams, useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
-import * as z from "zod"
+import { type z } from "zod"
 import { sizeSchema } from "@/validation-schemas/size.schema"
 
 export type SizeFormValues = z.infer<typeof sizeSchema>

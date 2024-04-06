@@ -3,7 +3,7 @@ import { ecomCmsOrders } from "../../../drizzle/schema"
 import { db } from "../db"
 import { and, eq } from "drizzle-orm"
 import { createInsertSchema } from "drizzle-zod"
-import { z } from "zod"
+import { type z } from "zod"
 import { fetchStoreById } from "./store.controller"
 import { currentDate } from "@/lib/utils"
 

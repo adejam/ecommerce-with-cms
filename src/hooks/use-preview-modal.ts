@@ -1,6 +1,6 @@
 import { create } from "zustand"
 
-import { StorefrontProduct } from "@/types"
+import { type StorefrontProduct } from "@/types"
 
 interface PreviewModalStore {
   isOpen: boolean

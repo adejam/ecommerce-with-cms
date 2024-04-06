@@ -7,7 +7,7 @@ export const productSchema = z.object({
     .array(),
   price: z.coerce.number().min(0),
   availableQuantity: z.coerce.number().min(0),
-  categoryId: z.string().min(0),
+  categoryId: z.string().min(0).nullish(),
   colorId: z.string().min(0).nullish(),
   sizeId: z.string().min(0).nullish(),
   isFeatured: z.boolean().default(false).optional(),

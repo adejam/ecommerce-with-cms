@@ -220,13 +220,13 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                   <Select
                     disabled={isPending || updateIsPending}
                     onValueChange={field.onChange}
-                    value={field.value}
-                    defaultValue={field.value}
+                    value={field.value || ""}
+                    defaultValue={field.value || ""}
                   >
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue
-                          defaultValue={field.value}
+                          defaultValue={field.value || ""}
                           placeholder="Select a category"
                         />
                       </SelectTrigger>
