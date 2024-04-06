@@ -32,7 +32,7 @@ const SignUpForm = () => {
   })
 
   const searchParams = useSearchParams()
-  const redirectFrom = searchParams?.get("redirectFrom")! ?? ""
+  const redirectFrom = searchParams?.get("redirectFrom") || ""
 
   const form = useForm<FormValues>({
     resolver: zodResolver(signupSchema),

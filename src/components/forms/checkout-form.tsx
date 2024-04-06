@@ -65,7 +65,7 @@ export const CheckoutForm: React.FC<Props> = ({ cartItems }) => {
                 <FormItem>
                   <FormLabel>Phone Number</FormLabel>
                   <FormControl>
-                    {/* @ts-ignore */}
+                    {/* @ts-expect-error phone can be string */}
                     <Input
                       disabled={isPending}
                       placeholder="Phone"

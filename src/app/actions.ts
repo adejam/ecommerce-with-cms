@@ -87,6 +87,7 @@ export const deleteResourceAssets = async ({
     .eq(resourceTarget, resourceId)
 
   if (data) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     const assetsName = data.map((d) => getImageNameFromUrl(d[assetFieldName]))
     const res = await deleteFiles(assetsName)
     return res

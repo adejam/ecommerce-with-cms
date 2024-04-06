@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": "18.x",
+    "npm": "please-use-yarn"
+  },
   "scripts": {
     "build": "next build",
     "db:push": "drizzle-kit push:pg",

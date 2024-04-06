@@ -32,8 +32,8 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     data.id
   )
 
-  const onCopy = (id: string) => {
-    navigator.clipboard.writeText(id)
+  const onCopy = async (id: string) => {
+    await navigator.clipboard.writeText(id)
     toast.success("Product ID copied to clipboard.")
   }
 
@@ -59,7 +59,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() =>
-              router.push(`/${params.store_id}/admin/products/${data.id}`)
+              router.push(`/${params.store_id as string}/admin/products/${data.id}`)
             }
           >
             <Edit className="mr-2 h-4 w-4" /> Update
