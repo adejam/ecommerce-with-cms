@@ -53,6 +53,12 @@ export const fetchAllUserStores = async (userId: string) => {
     .where(eq(ecomCmsStores.userId, userId))
 }
 
+export const fetchAllStores = async () => {
+  return await db
+    .select({ id: ecomCmsStores.id, name: ecomCmsStores.name })
+    .from(ecomCmsStores)
+}
+
 export const deleteStore = async (storeId: string, userId: string) => {
   await db
     .delete(ecomCmsStores)

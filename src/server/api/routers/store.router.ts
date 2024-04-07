@@ -1,5 +1,6 @@
 import {
   deleteStore,
+  fetchAllStores,
   fetchAllUserStores,
   updateStore,
 } from "./../../controllers/store.controller"
@@ -44,4 +45,7 @@ export const storeRouter = createTRPCRouter({
       await deleteStore(input, ctx.session.user.id)
       return true
     }),
+  fetchAllStores: publicProcedure.query(async () => {
+    return await fetchAllStores()
+  }),
 })

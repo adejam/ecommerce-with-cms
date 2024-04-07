@@ -27,6 +27,14 @@ const MainNav: React.FC<MainNavProps> = ({ initialData, storeId }) => {
 
   return (
     <nav className="mx-6 flex items-center space-x-4 lg:space-x-6">
+      <Link
+        href="/"
+        className={cn(
+          "text-sm font-medium transition-colors hover:text-black text-neutral-500"
+        )}
+      >
+        Ecommerce CMS Home
+      </Link>
       {routes.map((route) => (
         <Link
           key={route.href}
