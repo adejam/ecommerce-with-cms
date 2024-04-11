@@ -1,3 +1,5 @@
+// eslint-disable @typescript-eslint/no-unsafe-member-access
+
 import { fabric } from "fabric"
 import { v4 as uuid4 } from "uuid"
 
@@ -60,7 +62,7 @@ export const handleCanvasMouseDown = ({
   canvas.isDrawingMode = false
 
   // if selected shape is freeform, set drawing mode to true and return
-  if (selectedShapeRef.current === "freeform") {
+  if (selectedShapeRef?.current === "freeform") {
     isDrawing.current = true
     canvas.isDrawingMode = true
     canvas.freeDrawingBrush.width = 5
@@ -122,7 +124,7 @@ export const handleCanvaseMouseMove = ({
 
   // depending on the selected shape, set the dimensions of the shape stored in shapeRef in previous step of handelCanvasMouseDown
   // calculate shape dimensions based on pointer coordinates
-  switch (selectedShapeRef?.current) {
+  switch (selectedShapeRef.current) {
     case "rectangle":
       shapeRef.current?.set({
         width: pointer.x - (shapeRef.current?.left || 0),
@@ -238,17 +240,17 @@ export const handleCanvasObjectMoving = ({
 }: {
   options: fabric.IEvent
 }) => {
-  // get target object which is moving
-  const target = options.target as fabric.Object
+  // get target object which is moving == was here before
+  const target = options.target! as fabric.Object
 
   // target.canvas is the canvas on which the object is moving
-  const canvas = target.canvas as fabric.Canvas
+  const canvas = target.canvas! as fabric.Canvas
 
   // set coordinates of target object
   target.setCoords()
 
   // restrict object to canvas boundaries (horizontal)
-  if (target && target.left) {
+  if (target && target?.left) {
     target.left = Math.max(
       0,
       Math.min(
@@ -259,7 +261,7 @@ export const handleCanvasObjectMoving = ({
   }
 
   // restrict object to canvas boundaries (vertical)
-  if (target && target.top) {
+  if (target && target?.top) {
     target.top = Math.max(
       0,
       Math.min(
@@ -283,18 +285,18 @@ export const handleCanvasSelectionCreated = ({
   if (!options?.selected) return
 
   // get the selected element
-  const selectedElement = options?.selected[0] as fabric.Object
+  const selectedElement = options.selected[0]! as fabric.Object
 
   // if only one element is selected, set element attributes
   if (selectedElement && options.selected.length === 1) {
     // calculate scaled dimensions of the object
     const scaledWidth = selectedElement?.scaleX
-      ? selectedElement?.width! * selectedElement?.scaleX
-      : selectedElement?.width
+      ? selectedElement.width! * selectedElement?.scaleX
+      : selectedElement.width!
 
     const scaledHeight = selectedElement?.scaleY
-      ? selectedElement?.height! * selectedElement?.scaleY
-      : selectedElement?.height
+      ? selectedElement.height! * selectedElement?.scaleY
+      : selectedElement.height!
 
     setElementAttributes({
       width: scaledWidth?.toFixed(0).toString() || "",
@@ -320,11 +322,11 @@ export const handleCanvasObjectScaling = ({
 
   // calculate scaled dimensions of the object
   const scaledWidth = selectedElement?.scaleX
-    ? selectedElement?.width! * selectedElement?.scaleX
-    : selectedElement?.width
+    ? selectedElement?.width || 0 * selectedElement?.scaleX
+    : selectedElement?.width || 0
 
   const scaledHeight = selectedElement?.scaleY
-    ? selectedElement?.height! * selectedElement?.scaleY
+    ? selectedElement?.height || 0 * selectedElement?.scaleY
     : selectedElement?.height
 
   setElementAttributes((prev) => ({
@@ -359,7 +361,7 @@ export const renderCanvas = ({
       (enlivenedObjects: fabric.Object[]) => {
         enlivenedObjects.forEach((enlivenedObj) => {
           // if element is active, keep it in active state so that it can be edited further
-          if (activeObjectRef.current?.objectId === objectId) {
+          if (activeObjectRef?.current?.objectId === objectId) {
             fabricRef.current?.setActiveObject(enlivenedObj)
           }
 

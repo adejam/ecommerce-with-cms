@@ -29,7 +29,7 @@ export const handlePaste = (
 
   if (clipboardData) {
     try {
-      const parsedObjects = JSON.parse(clipboardData)
+      const parsedObjects = JSON.parse(clipboardData) as fabric.Object[]
       parsedObjects.forEach((objData: fabric.Object) => {
         // convert the plain javascript objects retrieved from localStorage into fabricjs objects (deserialization)
         fabric.util.enlivenObjects(
@@ -87,7 +87,8 @@ export const handleKeyDown = ({
   deleteShapeFromStorage,
 }: {
   e: KeyboardEvent
-  canvas: fabric.Canvas | any
+  // canvas: fabric.Canvas | any
+  canvas: fabric.Canvas
   undo: () => void
   redo: () => void
   syncShapeInStorage: (shape: fabric.Object) => void

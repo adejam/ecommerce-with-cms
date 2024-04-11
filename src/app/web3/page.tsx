@@ -8,9 +8,7 @@ import useCashApp from "@/hooks/use-cash-app"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import Image from "next/image"
 
-type Props = {}
-
-const page = (props: Props) => {
+const Page = () => {
   const { connected, publicKey, connecting, avatar, userAddress } = useCashApp()
   // console.log(avatar, userAddress)
   return (
@@ -27,4 +25,4 @@ const page = (props: Props) => {
   )
 }
 
-export default page
+export default Page
