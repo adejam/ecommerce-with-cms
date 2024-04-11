@@ -13,6 +13,11 @@ const config = {
         hostname: "**.supabase.co",
         pathname: "**",
       },
+      {
+        protocol: "https",
+        hostname: "gravatar.com",
+        pathname: "**",
+      },
     ],
   },
 }

@@ -1,4 +1,5 @@
 import { type ClassValue, clsx } from "clsx"
+import md5 from "md5"
 import { twMerge } from "tailwind-merge"
 
 export function cn(...inputs: ClassValue[]) {
@@ -40,3 +41,6 @@ export const currencyFormatter = new Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "USD",
 })
+
+export const getAvatarUrl = (key: string) =>
+  `https://gravatar.com/${md5(key)}?s=400&d=robohash&r=x`
