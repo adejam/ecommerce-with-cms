@@ -1,7 +1,7 @@
 import React from "react"
 import "@liveblocks/react-comments/styles.css"
 import { Work_Sans } from "next/font/google"
-import { Room } from "@/providers/liveblocks/room"
+import Room from "@/providers/liveblocks/room"
 
 const workSans = Work_Sans({
   subsets: ["latin"],

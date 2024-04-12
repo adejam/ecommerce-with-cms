@@ -18,7 +18,22 @@ const config = {
         hostname: "gravatar.com",
         pathname: "**",
       },
+      {
+        protocol: "https",
+        hostname: "liveblocks.io",
+        pathname: "**",
+      },
     ],
+  },
+  experimental: {
+    serverComponentsExternalPackages: ["fabric"],
+  },
+  webpack: (config) => {
+    config.externals.push({
+      sharp: "commonjs fabric",
+      canvas: "commonjs canvas",
+    })
+    return config
   },
 }
 

@@ -1,10 +1,10 @@
-import { createClient } from "@liveblocks/client"
+import { createClient, LiveMap } from "@liveblocks/client"
 import { createRoomContext, createLiveblocksContext } from "@liveblocks/react"
 
 const client = createClient({
   publicApiKey: process.env.NEXT_PUBLIC_LIVEBLOCKS_PUBLIC_KEY!,
   // authEndpoint: "/api/liveblocks-auth",
-  // throttle: 100,
+  throttle: 16,
   async resolveUsers({ userIds }) {
     // Used only for Comments and Notifications. Return a list of user information
     // retrieved from `userIds`. This info is used in comments, mentions etc.
@@ -61,6 +61,7 @@ type Presence = {
 // automatically persisted and synced to all connected clients.
 type Storage = {
   // author: LiveObject<{ firstName: string, lastName: string }>,
+  canvasObjects: LiveMap<string, any>
   // ...
 }
 

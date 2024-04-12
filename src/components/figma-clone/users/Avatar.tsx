@@ -1,6 +1,11 @@
 import Image from "next/image"
 
-import { Tooltip, TooltipContent, TooltipTrigger } from "../../ui/tooltip"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../../ui/tooltip"
 
 type Props = {
   name: string
@@ -8,7 +13,7 @@ type Props = {
 }
 
 const Avatar = ({ name, otherStyles }: Props) => (
-  <>
+  <TooltipProvider>
     <Tooltip>
       <TooltipTrigger>
         <div
@@ -27,7 +32,7 @@ const Avatar = ({ name, otherStyles }: Props) => (
         {name}
       </TooltipContent>
     </Tooltip>
-  </>
+  </TooltipProvider>
 )
 
 export default Avatar
